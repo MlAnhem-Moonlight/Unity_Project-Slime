@@ -1,0 +1,724 @@
+fileFormatVersion: 2
+guid: d71b24e7ea805fd40a9d1c7828f00ebc
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: girl_Frame_0
+    originalName: 
+    pivot: {x: 0.5625, y: -0.19230768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 136
+      width: 16
+      height: 26
+    spriteID: ad9829c4f250fc74080c394324ed1f18
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 136}
+  - name: girl_Frame_1
+    originalName: 
+    pivot: {x: 0.6470588, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 204
+      width: 17
+      height: 25
+    spriteID: 5a3ef74d71c52ef47938e01955e544a7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 204}
+  - name: girl_Frame_2
+    originalName: 
+    pivot: {x: 0.6875, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 96
+      width: 16
+      height: 25
+    spriteID: 1ad8851805b7e4f4c94c938ec885975f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 96}
+  - name: girl_Frame_3
+    originalName: 
+    pivot: {x: 0.64285713, y: -0.20833331}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 162
+      width: 14
+      height: 24
+    spriteID: 8e985b17dca60cf41be838e64eac6d22
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 162}
+  - name: girl_Frame_4
+    originalName: 
+    pivot: {x: 0.5882353, y: -0.20833331}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 170
+      width: 17
+      height: 24
+    spriteID: e833c0326dbd92548b2a1d16ccfe5f8d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 170}
+  - name: girl_Frame_5
+    originalName: 
+    pivot: {x: 0.64285713, y: -0.19999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 129
+      width: 14
+      height: 25
+    spriteID: 5a2f43bcf4e04964fbc0e012b0e74a90
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 129}
+  - name: girl_Frame_6
+    originalName: 
+    pivot: {x: 0.64285713, y: -0.20833331}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 194
+      width: 14
+      height: 24
+    spriteID: e77638d5e26897f458e89ee6ce0f205e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 194}
+  - name: girl_Frame_7
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.19230768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 68
+      width: 17
+      height: 26
+    spriteID: 2bcfeb08f7a4aeb43b89890e35473c2d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 68}
+  - name: girl_Frame_8
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.19230768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 102
+      width: 17
+      height: 26
+    spriteID: 61f6dbc922ffe494bb9f637dd62a5332
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 102}
+  - name: girl_Frame_9
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 202
+      width: 17
+      height: 24
+    spriteID: 612f3b496a2b9664da1a4e5ed42197c6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 202}
+  - name: girl_Frame_10
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 4
+      width: 17
+      height: 25
+    spriteID: 16c8de78ceeaf3449b3425670d0cf3e5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 4}
+  - name: girl_Frame_11
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.20833331}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 19
+      height: 24
+    spriteID: d110ae85f8de48249865f52265b18226
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: girl_Frame_12
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24999999}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 64
+      width: 17
+      height: 24
+    spriteID: b05d083dc915bae469f9f3ae6c7f8457
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 64}
+  - name: girl_Frame_13
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 37
+      width: 17
+      height: 25
+    spriteID: a7f84bca98ca6404eba41427d6394fe5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 37}
+  - name: girl_Frame_14
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.20833331}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 36
+      width: 19
+      height: 24
+    spriteID: bd50691245597714d8f0271d99db4f0f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 36}
+  - name: girl_Frame_15
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 70
+      width: 17
+      height: 25
+    spriteID: 39d94aedf62cf23449b630e42e9c8231
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 70}
+  - name: girl_Frame_16
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.19230768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 136
+      width: 17
+      height: 26
+    spriteID: dbdbc1f3520029349932b31ed734462e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 136}
+  - name: girl_Frame_17
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.27272725}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 4
+      width: 19
+      height: 22
+    spriteID: 4a383efdf42174a4ba0404097c650d01
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 4}
+  - name: girl_Frame_18
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.24}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 31
+      y: 103
+      width: 17
+      height: 25
+    spriteID: 4df0b203d4695be459062b723e011acf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 31, y: 103}
+  - name: girl_Frame_19
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.19230768}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 170
+      width: 17
+      height: 26
+    spriteID: de91280f61376ab4585d534f71ccb667
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 170}
+  - name: girl_Frame_20
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.27272725}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 56
+      y: 34
+      width: 19
+      height: 22
+    spriteID: cf77929badc35af4e81428ed13722610
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 56, y: 34}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1030125872
+    name: girl
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: girl_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 15
+        y: 5
+        width: 16
+        height: 26
+      spriteId: ad9829c4f250fc74080c394324ed1f18
+    - name: girl_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 13
+        y: 5
+        width: 17
+        height: 25
+      spriteId: 5a3ef74d71c52ef47938e01955e544a7
+    - name: girl_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 13
+        y: 5
+        width: 16
+        height: 25
+      spriteId: 1ad8851805b7e4f4c94c938ec885975f
+    - name: girl_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 15
+        y: 5
+        width: 14
+        height: 24
+      spriteId: 8e985b17dca60cf41be838e64eac6d22
+    - name: girl_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 14
+        y: 5
+        width: 17
+        height: 24
+      spriteId: e833c0326dbd92548b2a1d16ccfe5f8d
+    - name: girl_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 15
+        y: 5
+        width: 14
+        height: 25
+      spriteId: 5a2f43bcf4e04964fbc0e012b0e74a90
+    - name: girl_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 15
+        y: 5
+        width: 14
+        height: 24
+      spriteId: e77638d5e26897f458e89ee6ce0f205e
+    - name: girl_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 15
+        y: 5
+        width: 17
+        height: 26
+      spriteId: 2bcfeb08f7a4aeb43b89890e35473c2d
+    - name: girl_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 15
+        y: 5
+        width: 17
+        height: 26
+      spriteId: 61f6dbc922ffe494bb9f637dd62a5332
+    - name: girl_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 24
+      spriteId: 612f3b496a2b9664da1a4e5ed42197c6
+    - name: girl_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 25
+      spriteId: 16c8de78ceeaf3449b3425670d0cf3e5
+    - name: girl_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 14
+        y: 5
+        width: 19
+        height: 24
+      spriteId: d110ae85f8de48249865f52265b18226
+    - name: girl_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 24
+      spriteId: b05d083dc915bae469f9f3ae6c7f8457
+    - name: girl_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 25
+      spriteId: a7f84bca98ca6404eba41427d6394fe5
+    - name: girl_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 14
+        y: 5
+        width: 19
+        height: 24
+      spriteId: bd50691245597714d8f0271d99db4f0f
+    - name: girl_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 25
+      spriteId: 39d94aedf62cf23449b630e42e9c8231
+    - name: girl_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 15
+        y: 5
+        width: 17
+        height: 26
+      spriteId: dbdbc1f3520029349932b31ed734462e
+    - name: girl_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 14
+        y: 6
+        width: 19
+        height: 22
+      spriteId: 4a383efdf42174a4ba0404097c650d01
+    - name: girl_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 15
+        y: 6
+        width: 17
+        height: 25
+      spriteId: 4df0b203d4695be459062b723e011acf
+    - name: girl_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: 15
+        y: 5
+        width: 17
+        height: 26
+      spriteId: de91280f61376ab4585d534f71ccb667
+    - name: girl_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: 14
+        y: 6
+        width: 19
+        height: 22
+      spriteId: cf77929badc35af4e81428ed13722610
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 48, y: 37}

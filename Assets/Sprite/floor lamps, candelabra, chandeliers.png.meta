@@ -1,0 +1,1262 @@
+fileFormatVersion: 2
+guid: 59a6a6639b38ee0439af72a28f04b976
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_0
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1595
+        width: 302
+        height: 446
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 042808393abc4494590c23507ab2de5e
+      internalID: 752354253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_1
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 1634
+        width: 289
+        height: 414
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eaff8f7345013c428695720ab95d657
+      internalID: -192505675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1595
+        width: 622
+        height: 453
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f023d739deb0f4ba6da2278ea7ea8a
+      internalID: -936028040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_3
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 1670
+        width: 47
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27ee997b1532877488f8b4df2fd8d436
+      internalID: -476127591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_4
+      rect:
+        serializedVersion: 2
+        x: 1374
+        y: 1577
+        width: 315
+        height: 455
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f6f37ab468104444a4f273a4af6b9de
+      internalID: 2030945476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_5
+      rect:
+        serializedVersion: 2
+        x: 1643
+        y: 1673
+        width: 37
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83064c14ab4d2a47beeeff6d7f8f480
+      internalID: 1912431352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_6
+      rect:
+        serializedVersion: 2
+        x: 1718
+        y: 1607
+        width: 299
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6450e39b384f971418fa343b5e1e0862
+      internalID: -605281427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_7
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 801
+        width: 759
+        height: 851
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfa1b36413541804586753e521300d65
+      internalID: 1631380286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_8
+      rect:
+        serializedVersion: 2
+        x: 1496
+        y: 1592
+        width: 152
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e433e24ceaa3b6043bae0160d866b2e8
+      internalID: -1829759166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_9
+      rect:
+        serializedVersion: 2
+        x: 1964
+        y: 1591
+        width: 54
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c9bff58b0a89d04cb325c1b3659e879
+      internalID: 1938475935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_10
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 1197
+        width: 318
+        height: 363
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1648c58389cfaf94c9fcace41d58c5a8
+      internalID: -977067304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_11
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 1218
+        width: 68
+        height: 334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fddbf0d5080d319418384a0577f09322
+      internalID: 1626650569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_12
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 1216
+        width: 90
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07efa95691b62c5408c458bd4babc042
+      internalID: 1433152421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_13
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 1197
+        width: 87
+        height: 355
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f53cbce9ac1e83c45a5e4396722d0faf
+      internalID: -148692409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_14
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 1196
+        width: 18
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 190b0f6c102b86446838262e9eef2bf2
+      internalID: -206856885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_15
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 1184
+        width: 194
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bfea31217a5e9f48b5b4a6acfeeffe8
+      internalID: -331601730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_16
+      rect:
+        serializedVersion: 2
+        x: 1775
+        y: 1196
+        width: 273
+        height: 346
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f9c9419e19dd5a44b10e60695e2e128
+      internalID: 583496227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_17
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 823
+        width: 106
+        height: 331
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25392547a282c554781088945f1859a7
+      internalID: 198831534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_18
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 868
+        width: 4
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9851ee8c212374b40bb9190a5a593947
+      internalID: -316933206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_19
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 822
+        width: 81
+        height: 339
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af7bf1f8f0377fe46a93b7c2f0514994
+      internalID: -2092198340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_20
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 824
+        width: 66
+        height: 328
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e981917dfd9704f88408dcc9277846
+      internalID: 1651627892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_21
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 822
+        width: 52
+        height: 344
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1798e73bfa7aa6042af954c49030c1d4
+      internalID: -281422047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_22
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 825
+        width: 86
+        height: 333
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36d4e01ff5f2a9d4eaae8d27ec68f503
+      internalID: 171989136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_23
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 823
+        width: 54
+        height: 342
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 078bc1c77e6d6f445ae6d9b5c9f59af5
+      internalID: -346754966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_24
+      rect:
+        serializedVersion: 2
+        x: 1523
+        y: 820
+        width: 162
+        height: 281
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 186d57f6944df9241aacca69d3085195
+      internalID: 151777132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_25
+      rect:
+        serializedVersion: 2
+        x: 1755
+        y: 826
+        width: 261
+        height: 331
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638a54945cbc1f5499e966fd25ecd96c
+      internalID: -2140814148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_26
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 804
+        width: 29
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7827977e8b3ef034bb8a227154a88a05
+      internalID: 336935369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_27
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 408
+        width: 344
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bcb17edc79eb9541bb98d6a40569ba7
+      internalID: -668520015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_28
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 440
+        width: 79
+        height: 325
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edd01c463aa6b42449dba00dc02d34bd
+      internalID: -1806243395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_29
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 400
+        width: 129
+        height: 357
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bb8e6a2104fe9d4aa1d0b4ad57e36ee
+      internalID: -117750797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_30
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 436
+        width: 101
+        height: 317
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729729212413c444f9096b73b556494e
+      internalID: -1258488087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_31
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 436
+        width: 99
+        height: 345
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb246cdd044d36541b8154c88855c5fa
+      internalID: 370077953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_32
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 752
+        width: 10
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b5d1da689be28489b2c7aea1c3c2f5
+      internalID: -812740997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_33
+      rect:
+        serializedVersion: 2
+        x: 1723
+        y: 404
+        width: 299
+        height: 360
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 038c3a339f679c547ae7c97b7239c0d4
+      internalID: -1525690227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_34
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 432
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a513714da5f63a042aaa20b8f6540c8a
+      internalID: 1353265261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_35
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 409
+        width: 305
+        height: 269
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb66d591e4c922440a86fe22dc44aaf8
+      internalID: -31549307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_36
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 442
+        width: 4
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 743946ce4cea5874d8f4ca670d07729d
+      internalID: 1503804438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_37
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 433
+        width: 314
+        height: 297
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f025f6243c35a784ebc431e5db0dbd52
+      internalID: -826671973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_38
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 410
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ead9862da27ea4b4cb7e5c40292300d3
+      internalID: 657425186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_39
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 409
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d3fec31bc5bdaf41a09dd1cdf7ae09e
+      internalID: 1603800155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_40
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 402
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0446468ce6a5ecc4cab6858b2d51ad37
+      internalID: 703944544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_41
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 402
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bde62fefd004124986d9554730a05f0
+      internalID: 210840611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_42
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 34
+        width: 288
+        height: 325
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dbd1f4a055cb7644a3666bf0e64d6f4
+      internalID: -2015807501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_43
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 32
+        width: 282
+        height: 327
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d96a231c226330647813f602f60765fa
+      internalID: -1417326377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_44
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 19
+        width: 313
+        height: 359
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be83d83bcabbb4c4d8a3715d1b629869
+      internalID: -1686114477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_45
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 34
+        width: 314
+        height: 337
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58693aaedef2d90438f6f525b381601a
+      internalID: -1685225592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_46
+      rect:
+        serializedVersion: 2
+        x: 1374
+        y: 1
+        width: 311
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 331295aaec705ff478bd9b530d8fb78f
+      internalID: -1302118454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_47
+      rect:
+        serializedVersion: 2
+        x: 1741
+        y: 34
+        width: 262
+        height: 327
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd52fe68a8996ab42a7bcc9306aceb3e
+      internalID: -1478375215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_48
+      rect:
+        serializedVersion: 2
+        x: 1981
+        y: 356
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56663ddf63d0fac488bb3c5af28358f6
+      internalID: 2117081832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_49
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 142
+        width: 5
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6393c69f229ac1419f7298373fbffb5
+      internalID: 1686774442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: floor lamps, candelabra, chandeliers_50
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 96
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 195a151c393abae4694b1e11c7dbe529
+      internalID: 1117790108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      floor lamps, candelabra, chandeliers_0: 752354253
+      floor lamps, candelabra, chandeliers_1: -192505675
+      floor lamps, candelabra, chandeliers_10: -977067304
+      floor lamps, candelabra, chandeliers_11: 1626650569
+      floor lamps, candelabra, chandeliers_12: 1433152421
+      floor lamps, candelabra, chandeliers_13: -148692409
+      floor lamps, candelabra, chandeliers_14: -206856885
+      floor lamps, candelabra, chandeliers_15: -331601730
+      floor lamps, candelabra, chandeliers_16: 583496227
+      floor lamps, candelabra, chandeliers_17: 198831534
+      floor lamps, candelabra, chandeliers_18: -316933206
+      floor lamps, candelabra, chandeliers_19: -2092198340
+      floor lamps, candelabra, chandeliers_2: -936028040
+      floor lamps, candelabra, chandeliers_20: 1651627892
+      floor lamps, candelabra, chandeliers_21: -281422047
+      floor lamps, candelabra, chandeliers_22: 171989136
+      floor lamps, candelabra, chandeliers_23: -346754966
+      floor lamps, candelabra, chandeliers_24: 151777132
+      floor lamps, candelabra, chandeliers_25: -2140814148
+      floor lamps, candelabra, chandeliers_26: 336935369
+      floor lamps, candelabra, chandeliers_27: -668520015
+      floor lamps, candelabra, chandeliers_28: -1806243395
+      floor lamps, candelabra, chandeliers_29: -117750797
+      floor lamps, candelabra, chandeliers_3: -476127591
+      floor lamps, candelabra, chandeliers_30: -1258488087
+      floor lamps, candelabra, chandeliers_31: 370077953
+      floor lamps, candelabra, chandeliers_32: -812740997
+      floor lamps, candelabra, chandeliers_33: -1525690227
+      floor lamps, candelabra, chandeliers_34: 1353265261
+      floor lamps, candelabra, chandeliers_35: -31549307
+      floor lamps, candelabra, chandeliers_36: 1503804438
+      floor lamps, candelabra, chandeliers_37: -826671973
+      floor lamps, candelabra, chandeliers_38: 657425186
+      floor lamps, candelabra, chandeliers_39: 1603800155
+      floor lamps, candelabra, chandeliers_4: 2030945476
+      floor lamps, candelabra, chandeliers_40: 703944544
+      floor lamps, candelabra, chandeliers_41: 210840611
+      floor lamps, candelabra, chandeliers_42: -2015807501
+      floor lamps, candelabra, chandeliers_43: -1417326377
+      floor lamps, candelabra, chandeliers_44: -1686114477
+      floor lamps, candelabra, chandeliers_45: -1685225592
+      floor lamps, candelabra, chandeliers_46: -1302118454
+      floor lamps, candelabra, chandeliers_47: -1478375215
+      floor lamps, candelabra, chandeliers_48: 2117081832
+      floor lamps, candelabra, chandeliers_49: 1686774442
+      floor lamps, candelabra, chandeliers_5: 1912431352
+      floor lamps, candelabra, chandeliers_50: 1117790108
+      floor lamps, candelabra, chandeliers_6: -605281427
+      floor lamps, candelabra, chandeliers_7: 1631380286
+      floor lamps, candelabra, chandeliers_8: -1829759166
+      floor lamps, candelabra, chandeliers_9: 1938475935
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

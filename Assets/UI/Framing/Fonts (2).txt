@@ -1,0 +1,9 @@
+Fonts used in this design:
+
+Font: Amble
+Author: Punchcut
+Url: http://www.fontsquirrel.com/fonts/amble
+
+Font: GriffosFont
+Author: Manfred Klein Fonteria
+Url: http://www.fontsquirrel.com/fonts/griffosfont

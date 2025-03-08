@@ -1,0 +1,388 @@
+fileFormatVersion: 2
+guid: dedd69c72f06eff49b6e795a029399b1
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: ship-01_Frame_0
+    originalName: 
+    pivot: {x: 0.50416666, y: -0.44117647}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 120
+      height: 34
+    spriteID: e81f3db4b82391b489bc25ccdc531907
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: ship-01_Frame_1
+    originalName: 
+    pivot: {x: 0.54395604, y: -0.27272725}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 130
+      width: 91
+      height: 44
+    spriteID: a433c166f1a35874b8fa52fee153fb57
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 130}
+  - name: ship-01_Frame_2
+    originalName: 
+    pivot: {x: 0.52222216, y: -0.049999997}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 182
+      width: 45
+      height: 60
+    spriteID: fde7281f28cb254458ae1c91696ac9e4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 182}
+  - name: ship-01_Frame_3
+    originalName: 
+    pivot: {x: 0.45604396, y: -0.27272725}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 103
+      y: 130
+      width: 91
+      height: 44
+    spriteID: 16b41a027fc3d654882991ed36376ada
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 103, y: 130}
+  - name: ship-01_Frame_4
+    originalName: 
+    pivot: {x: 0.49583334, y: -0.44117647}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 4
+      width: 120
+      height: 34
+    spriteID: 4c5303092218df941b61f69c40ecc235
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 4}
+  - name: ship-01_Frame_5
+    originalName: 
+    pivot: {x: 0.50416666, y: -0.44117647}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 46
+      width: 120
+      height: 34
+    spriteID: 440aee054824c4e48b0dced39d5ed151
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 46}
+  - name: ship-01_Frame_6
+    originalName: 
+    pivot: {x: 0.49576268, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 88
+      width: 118
+      height: 34
+    spriteID: 3fe51cd4bc52b0543bda32a1b789c988
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 88}
+  - name: ship-01_Frame_7
+    originalName: 
+    pivot: {x: 0.50416666, y: -0.44117647}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 132
+      y: 46
+      width: 120
+      height: 34
+    spriteID: d0fdaa4906595e84c916e27fd7168316
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 132, y: 46}
+  - name: ship-01_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -0.8148148}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 130
+      y: 88
+      width: 119
+      height: 27
+    spriteID: accc26fa6f10ed640b73dc5d38448dea
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 130, y: 88}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1447231148
+    name: ship-01
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: ship-01_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 2
+        y: 15
+        width: 120
+        height: 34
+      spriteId: e81f3db4b82391b489bc25ccdc531907
+    - name: ship-01_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 13
+        y: 12
+        width: 91
+        height: 44
+      spriteId: a433c166f1a35874b8fa52fee153fb57
+    - name: ship-01_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 39
+        y: 3
+        width: 45
+        height: 60
+      spriteId: fde7281f28cb254458ae1c91696ac9e4
+    - name: ship-01_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 21
+        y: 12
+        width: 91
+        height: 44
+      spriteId: 16b41a027fc3d654882991ed36376ada
+    - name: ship-01_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 3
+        y: 15
+        width: 120
+        height: 34
+      spriteId: 4c5303092218df941b61f69c40ecc235
+    - name: ship-01_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 2
+        y: 15
+        width: 120
+        height: 34
+      spriteId: 440aee054824c4e48b0dced39d5ed151
+    - name: ship-01_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 4
+        y: 16
+        width: 118
+        height: 34
+      spriteId: 3fe51cd4bc52b0543bda32a1b789c988
+    - name: ship-01_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 2
+        y: 15
+        width: 120
+        height: 34
+      spriteId: d0fdaa4906595e84c916e27fd7168316
+    - name: ship-01_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 3
+        y: 22
+        width: 119
+        height: 27
+      spriteId: accc26fa6f10ed640b73dc5d38448dea
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 125, y: 76}

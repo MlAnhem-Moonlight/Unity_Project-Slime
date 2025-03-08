@@ -1,0 +1,47 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string filePath = "path/to/your/file.txt"; // Đường dẫn tới file của bạn
+        int pathValue = ReadPathValueFromFile(filePath);
+
+        if (pathValue != -1)
+        {
+            Console.WriteLine("Giá trị đọc từ file: " + pathValue);
+        }
+        else
+        {
+            Console.WriteLine("Không tìm thấy giá trị hợp lệ trong file.");
+        }
+    }
+
+    static int ReadPathValueFromFile(string filePath)
+    {
+        try
+        {
+            // Đọc tất cả các dòng từ file
+            string[] lines = File.ReadAllLines(filePath);
+
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("Path: "))
+                {
+                    string valueString = line.Substring("Path: ".Length);
+                    if (int.TryParse(valueString, out int value))
+                    {
+                        return value; // Trả về giá trị số sau "Path: "
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Lỗi khi đọc file: " + ex.Message);
+        }
+
+        return -1; // Trả về -1 nếu không tìm thấy giá trị hợp lệ
+    }
+}
