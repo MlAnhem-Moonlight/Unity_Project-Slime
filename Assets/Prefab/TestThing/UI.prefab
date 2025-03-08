@@ -1832,6 +1832,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8008052683271273865}
     m_Modifications:
+    - target: {fileID: 2127399143187987516, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946874698795776693, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -368.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2946874698795776693, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3386116359061804979, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3502605959280526169, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4421511556331136518, guid: cdc047f74ef224041922ecc3ae3f129a, type: 3}
       propertyPath: pauseMenu
       value: 
