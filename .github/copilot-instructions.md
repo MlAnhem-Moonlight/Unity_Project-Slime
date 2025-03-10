@@ -2,7 +2,7 @@
 - Project name: Slime
 - Unity version: Unity 2022.3.6f1
 - Active game object:
-  - Name: atkRange
-  - Tag: Untagged
-  - Layer: Human
+  - Name: dagger
+  - Tag: Projective
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

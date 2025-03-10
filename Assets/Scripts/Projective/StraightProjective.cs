@@ -33,7 +33,7 @@ public class StraightProjective : MonoBehaviour
     // Method to stop the object when it enters a trigger
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player") && !other.CompareTag("Ally"))
+        if (!other.CompareTag("Player") && !other.CompareTag("Ally") && !other.CompareTag("AIX"))
         {
             if(other.CompareTag("Enemy") || other.CompareTag("Hanging")) Destroy(gameObject);
             StopAndDestroy();
@@ -43,6 +43,7 @@ public class StraightProjective : MonoBehaviour
     // Method to stop the object and destroy it after 3 seconds
     void StopAndDestroy()
     {
+        transform.parent = null;
         rb.velocity = Vector2.zero; // Stop the object's movement
         rb.angularVelocity = 0f; // Stop any rotation
         StartCoroutine(IncreaseDragOverTime(1f)); // Start coroutine to increase drag over 0.2 seconds

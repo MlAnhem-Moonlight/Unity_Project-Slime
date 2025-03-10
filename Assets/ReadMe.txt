@@ -10,4 +10,7 @@ sửa lại các animation của nhảy và shifting
 Hoàn thành các tác vụ chuyển scene
 Thử làm save
 
-Lỗi trigger của Dealingdmg không nhận soldier
+Lỗi trigger của Dealingdmg không nhận soldier (V)
+
+Tìm cách chuyển từ movement sang usingskill và ngược lại:
+	- movement -> usingskill: khi nhấn phím skill, sau đó khi prefab được tạo ra bị phá hủy thì chuyển về movement(V)

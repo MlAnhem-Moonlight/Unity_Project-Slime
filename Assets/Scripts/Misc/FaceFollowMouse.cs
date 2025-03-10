@@ -9,7 +9,7 @@ public class FaceFollowMouse : MonoBehaviour
     private GameObject player;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("AIX");
     }
 
     // Update is called once per frame

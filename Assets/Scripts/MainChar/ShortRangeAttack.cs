@@ -90,9 +90,16 @@ public class ShortRangeAttack : MonoBehaviour
 
     void setTarget()
     {
-        if (Input.GetMouseButtonDown(0)) // Check for left mouse button click
+        try
+        {    
+            if (Input.GetMouseButtonDown(0)) // Check for left mouse button click
+            {
+                target = targetSelector.GetTargetUnderMouse();
+            }
+        }
+        catch(Exception e)
         {
-            target = targetSelector.GetTargetUnderMouse();
+            Debug.Log("Set target: " + e.Message);
         }
     }
 }

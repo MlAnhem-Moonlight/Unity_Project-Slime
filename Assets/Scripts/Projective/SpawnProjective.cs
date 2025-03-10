@@ -11,7 +11,6 @@ public class SpawnProjective : MonoBehaviour
 
     private GameObject instantiatedIcon;
     private bool isOnCooldown = false;
-    private int direction = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +21,22 @@ public class SpawnProjective : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.GetComponent<Movement>().IsFacingLeft) direction = -1;
-        else direction = 1;
-        if (Input.GetKeyDown(fireBtn) && !isOnCooldown)
+        try
         {
-            if (instantiatedIcon == null)
+            if (Input.GetKeyDown(fireBtn) && !isOnCooldown)
             {
-                instantiatedIcon = Instantiate(ptPrefab, new Vector3(player.transform.position.x +1f, player.transform.position.y + 1f, player.transform.position.z), Quaternion.identity);
-                FaceFollowMouse.instantiatedIcon = instantiatedIcon;
-                StartCoroutine(Cooldown());
+                if (instantiatedIcon == null)
+                {
+                    instantiatedIcon = Instantiate(ptPrefab, new Vector3(player.transform.position.x + 1f, player.transform.position.y, player.transform.position.z), Quaternion.identity);
+                    instantiatedIcon.transform.SetParent(transform);
+                    FaceFollowMouse.instantiatedIcon = instantiatedIcon;
+                    StartCoroutine(Cooldown());
+                }
             }
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
         }
     }
 
