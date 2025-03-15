@@ -30,7 +30,6 @@ public class UsingSkill : Nodes
         }
         catch(System.Exception e)
         {
-            Debug.Log(e.Message);
             state = NodeState.FAILURE;
             return state;
 
