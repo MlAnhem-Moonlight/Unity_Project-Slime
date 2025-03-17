@@ -1,0 +1,67 @@
+using UnityEngine;
+
+public class HexGrid : MonoBehaviour
+{
+    public GameObject hexPrefab; // Tham chiếu tới Prefab HexTile
+    public int width; // Số ô theo chiều ngang
+    public int height; // Số ô theo chiều dọc
+    public float hexSize = 1f; // Kích thước mỗi ô
+
+    public GameObject characterPrefab;
+    void Start()
+    {
+        GenerateGrid();
+        SpawnCharacter(2, 3); // Đặt nhân vật lên ô (2, 3)
+
+    }
+
+    void GenerateGrid()
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                // Tính vị trí lục giác
+                float xOffset = (y % 2 == 0) ? 0 : hexSize * 0.75f; // Dịch dòng chẵn/ lẻ
+                Vector3 position = new Vector3(
+                    x * hexSize * 1.5f + xOffset,
+                    y * hexSize * Mathf.Sqrt(3) / 2,
+                    0);
+
+                // Tạo ô từ Prefab
+                GameObject hexTile = Instantiate(hexPrefab, position, Quaternion.identity, transform);
+
+                // Gán giá trị ô
+                HexTile tile = hexTile.GetComponent<HexTile>();
+                tile.SetPosition(x, y);
+            }
+        }
+    }
+
+
+    void SpawnCharacter(int x, int y)
+    {
+        GameObject character = Instantiate(characterPrefab);
+        HexTile tile = GetTileAt(x, y);
+        if (tile != null)
+        {
+            Character charScript = character.GetComponent<Character>();
+            charScript.PlaceOnTile(tile);
+        }
+    }
+
+    HexTile GetTileAt(int x, int y)
+    {
+        foreach (Transform child in transform)
+        {
+            HexTile tile = child.GetComponent<HexTile>();
+            if (tile != null && tile.X == x && tile.Y == y)
+                return tile;
+        }
+
+        Debug.LogWarning($"No tile found at ({x}, {y})");
+        return null; // Không tìm thấy ô
+    }
+
+
+}

@@ -8,16 +8,21 @@ public class HexGridMeshGenerator : MonoBehaviour
 {
     public LayerMask gridLayer;
     public HexGrid hexGrid;
+    public Material hexagonMaterial; // Reference to the hexagon material
 
     private void Awake()
     {
-        if(hexGrid == null)
+        if (hexGrid == null)
         {
             hexGrid = GetComponentInParent<HexGrid>();
         }
-        if(hexGrid == null)
+        if (hexGrid == null)
         {
             Debug.LogError("HexGridMeshGenerator: No HexGrid found in parent");
+        }
+        if (GetComponent<LineRenderer>() == null)
+        {
+            gameObject.AddComponent<LineRenderer>();
         }
     }
 
@@ -32,6 +37,7 @@ public class HexGridMeshGenerator : MonoBehaviour
         this.gridLayer = layer;
         CreateHexMesh(hexGrid.hexWidth, hexGrid.hexHeight, hexGrid.hexSize, hexGrid.orientation, gridLayer);
     }
+
     public void ClearHex()
     {
         if (GetComponent<MeshFilter>().sharedMesh == null)
@@ -41,10 +47,12 @@ public class HexGridMeshGenerator : MonoBehaviour
         GetComponent<MeshFilter>().sharedMesh.Clear();
         GetComponent<MeshCollider>().sharedMesh.Clear();
     }
+
     public void CreateHexMesh(int width, int height, float size, HexOrientation orientation, LayerMask layer)
     {
         ClearHex();
         Vector3[] vertices = new Vector3[width * height * 7];
+        List<Vector3> borderVertices = new List<Vector3>();
 
         for (int y = 0; y < height; y++)
         {
@@ -52,10 +60,23 @@ public class HexGridMeshGenerator : MonoBehaviour
             {
                 Vector3 centrePosition = HexMatrix.Center(size, x, y, orientation);
                 vertices[(y * width + x) * 7] = centrePosition;
-                for (int s = 0; s < HexMatrix.Corners(orientation, size).Length; s++)
+                Vector3[] corners = HexMatrix.Corners(orientation, size);
+                for (int s = 0; s < corners.Length; s++)
                 {
-                    vertices[(y * width + x) * 7 + 1 + s] = centrePosition + HexMatrix.Corners(orientation, size)[s % 6];
+                    Vector3 corner = centrePosition + corners[s];
+                    vertices[(y * width + x) * 7 + 1 + s] = corner;
+                    borderVertices.Add(corner);
                 }
+                // Close the loop for the hexagon border
+                borderVertices.Add(centrePosition + corners[0]);
+
+                // Create a hexagon GameObject and add the HexagonHover script
+                GameObject hexagon = new GameObject($"Hexagon_{x}_{y}");
+                hexagon.transform.position = centrePosition;
+                hexagon.AddComponent<MeshFilter>().mesh = CreateHexagonMesh(corners);
+                MeshRenderer renderer = hexagon.AddComponent<MeshRenderer>();
+                renderer.material = hexagonMaterial; // Use the hexagon material
+                hexagon.transform.SetParent(transform);
             }
         }
 
@@ -91,21 +112,50 @@ public class HexGridMeshGenerator : MonoBehaviour
         Debug.Log("Layer Index: " + gridLayerIndex);
 
         gameObject.layer = gridLayerIndex;
+
+        // Configure LineRenderer for borders
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer != null)
+        {
+            lineRenderer.positionCount = borderVertices.Count;
+            lineRenderer.SetPositions(borderVertices.ToArray());
+        }
+    }
+
+    private Mesh CreateHexagonMesh(Vector3[] corners)
+    {
+        Mesh mesh = new Mesh();
+        Vector3[] vertices = new Vector3[7];
+        vertices[0] = Vector3.zero;
+        for (int i = 0; i < 6; i++)
+        {
+            vertices[i + 1] = corners[i];
+        }
+
+        int[] triangles = new int[18];
+        for (int i = 0; i < 6; i++)
+        {
+            triangles[i * 3] = 0;
+            triangles[i * 3 + 1] = i + 1;
+            triangles[i * 3 + 2] = i == 5 ? 1 : i + 2;
+        }
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        return mesh;
     }
 
     private int GetLayerIndex(LayerMask layerMask)
     {
         int layerMaskValue = layerMask.value;
-        Debug.Log("Layer Mask Value: " + layerMaskValue);
         for (int i = 0; i < 32; i++)
         {
             if (((1 << i) & layerMaskValue) != 0)
             {
-                Debug.Log("Layer Index Loop: " + i);
                 return i;
             }
         }
         return 0;
     }
-
 }

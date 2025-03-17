@@ -21,7 +21,7 @@ public class DealingDmg : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
        
-        if (collision.gameObject.layer != gameObject.layer)
+        if (collision.gameObject.layer != gameObject.layer && collision.gameObject.GetComponent<TakenDmg>() == true)
         {
             try
             {
