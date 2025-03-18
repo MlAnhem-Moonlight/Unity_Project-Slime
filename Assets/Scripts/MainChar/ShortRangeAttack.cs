@@ -92,7 +92,7 @@ public class ShortRangeAttack : MonoBehaviour
     {
         try
         {    
-            if (Input.GetMouseButtonDown(0)) // Check for left mouse button click
+            if (Input.GetMouseButtonDown(0) && targetSelector.GetTargetUnderMouse().tag != "Untagged") // Check for left mouse button click
             {
                 target = targetSelector.GetTargetUnderMouse();
             }

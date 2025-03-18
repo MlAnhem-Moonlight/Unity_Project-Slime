@@ -20,8 +20,7 @@ public class HexTile : MonoBehaviour
         {
             if (hexGridInteraction != null)
             {
-                hexGridInteraction.HighlightHexTile(this);
-                Debug.Log($"Right-clicked on HexTile at ({X}, {Y})");
+                //hexGridInteraction.HighlightHexTile(this);
             }
         }
     }

@@ -16,6 +16,8 @@ public class HexGrid : MonoBehaviour
     public delegate void GridGeneratedHandler();
     public event GridGeneratedHandler OnGridGenerated;
 
+    private bool isGridGenerated = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,50 +70,15 @@ public class HexGrid : MonoBehaviour
             }
         }
 
-        // Notify listeners that the grid generation is complete
+        isGridGenerated = true;
+        Debug.Log("Grid generation complete, invoking OnGridGenerated.");
         OnGridGenerated?.Invoke();
     }
 
-    /*
-    void GenerateHexGrid()
+    public bool IsGridGenerated()
     {
-        // Clear existing hex tiles
-        foreach (HexTile tile in HexTiles)
-        {
-            Destroy(tile.gameObject);
-        }
-        HexTiles.Clear();
-
-        for (int y = 0; y < hexHeight; y++)
-        {
-            for (int x = 0; x < hexWidth; x++)
-            {
-                // Calculate the center position of the hex tile
-                Vector3 centrePosition = HexMatrix.Center(hexSize, x, y, orientation) + transform.position;
-
-                // Instantiate a new hex tile GameObject
-                GameObject hexTileObject = Instantiate(hexPrefab, centrePosition, Quaternion.identity, transform);
-
-                // Get the HexTile component
-                HexTile tile = hexTileObject.GetComponent<HexTile>();
-                if (tile != null)
-                {
-                    tile.X = x;
-                    tile.Y = y;
-                    tile.WorldPosition = centrePosition;
-                    tile.IsOccupied = false;
-
-                    // Add the tile to the list
-                    HexTiles.Add(tile);
-                }
-                else
-                {
-                    Debug.LogError("HexPrefab does not have a HexTile component.");
-                }
-            }
-        }
+        return isGridGenerated;
     }
-    */
 }
 
 public enum HexOrientation
@@ -119,3 +86,44 @@ public enum HexOrientation
     PointyTop,
     FlatTop
 }
+
+/*
+void GenerateHexGrid()
+{
+    // Clear existing hex tiles
+    foreach (HexTile tile in HexTiles)
+    {
+        Destroy(tile.gameObject);
+    }
+    HexTiles.Clear();
+
+    for (int y = 0; y < hexHeight; y++)
+    {
+        for (int x = 0; x < hexWidth; x++)
+        {
+            // Calculate the center position of the hex tile
+            Vector3 centrePosition = HexMatrix.Center(hexSize, x, y, orientation) + transform.position;
+
+            // Instantiate a new hex tile GameObject
+            GameObject hexTileObject = Instantiate(hexPrefab, centrePosition, Quaternion.identity, transform);
+
+            // Get the HexTile component
+            HexTile tile = hexTileObject.GetComponent<HexTile>();
+            if (tile != null)
+            {
+                tile.X = x;
+                tile.Y = y;
+                tile.WorldPosition = centrePosition;
+                tile.IsOccupied = false;
+
+                // Add the tile to the list
+                HexTiles.Add(tile);
+            }
+            else
+            {
+                Debug.LogError("HexPrefab does not have a HexTile component.");
+            }
+        }
+    }
+}
+*/

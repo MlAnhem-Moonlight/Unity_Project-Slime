@@ -2,7 +2,7 @@
 - Project name: Slime
 - Unity version: Unity 2022.3.6f1
 - Active game object:
-  - Name: Grounds
+  - Name: test
   - Tag: Untagged
-  - Layer: Default
+  - Layer: HexGrid
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

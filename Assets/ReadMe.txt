@@ -15,5 +15,7 @@ Lỗi trigger của Dealingdmg không nhận soldier (V)
 Tìm cách chuyển từ movement sang usingskill và ngược lại:
 	- movement -> usingskill: khi nhấn phím skill, sau đó khi prefab được tạo ra bị phá hủy thì chuyển về movement(V)
 
-Bug di chuyển với A*( skip 1 vài ô, đi xuyên qua 1 vài ô, không thể trở lại vị trí cũ, tìm sai đường)
+Bug di chuyển với A*( skip 1 vài ô, đi xuyên qua 1 vài ô, không thể trở lại vị trí cũ, tìm sai đường) *không sửa được(V) -> xây thuật toán tìm đường khác
+
+
 sửa lại cho khớp di chuyển với interact tile
