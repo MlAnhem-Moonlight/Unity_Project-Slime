@@ -1,0 +1,241 @@
+using System;
+using System.Collections.Generic;
+
+class HexMazePathfinding
+{
+    // Định nghĩa 6 hướng di chuyển trong lưới lục giác
+    // Sử dụng hệ tọa độ offset
+    private static readonly (int, int)[] Directions = new (int, int)[]
+    {
+        (1, 0),    // Phải
+        (0, 1),    // Phải trên
+        (-1, 1),   // Trái trên
+        (-1, 0),   // Trái
+        (0, -1),   // Trái dưới
+        (1, -1)    // Phải dưới
+    };
+
+    /// <summary>
+    /// Tìm đường đi trong mê cung lục giác sử dụng thuật toán BFS
+    /// </summary>
+    /// <param name="maze">Ma trận 2D biểu diễn mê cung (0: ô trống, 1: tường)</param>
+    /// <param name="start">Điểm xuất phát</param>
+    /// <param name="end">Điểm đích</param>
+    /// <returns>Danh sách các vị trí tạo thành đường đi hoặc null nếu không tìm thấy</returns>
+    public static List<(int, int)> FindPathInHexMaze(int[,] maze, (int, int) start, (int, int) end)
+    {
+        int rows = maze.GetLength(0);
+        int cols = maze.GetLength(1);
+        
+        // Sử dụng HashSet để theo dõi các ô đã thăm
+        HashSet<(int, int)> visited = new HashSet<(int, int)>();
+        
+        // Hàng đợi chứa (vị trí hiện tại, đường đi hiện tại)
+        Queue<((int, int), List<(int, int)>)> queue = new Queue<((int, int), List<(int, int)>)>();
+        
+        // Thêm điểm xuất phát vào hàng đợi
+        List<(int, int)> initialPath = new List<(int, int)> { start };
+        queue.Enqueue((start, initialPath));
+        
+        while (queue.Count > 0)
+        {
+            ((int x, int y), List<(int, int)> path) = queue.Dequeue();
+            
+            // Nếu đã đến đích
+            if ((x, y).Equals(end))
+            {
+                return path;
+            }
+            
+            // Nếu vị trí hiện tại đã được thăm
+            if (visited.Contains((x, y)))
+            {
+                continue;
+            }
+            
+            // Đánh dấu vị trí hiện tại là đã thăm
+            visited.Add((x, y));
+            
+            // Kiểm tra tất cả các hướng có thể di chuyển
+            foreach ((int dx, int dy) in Directions)
+            {
+                int nx = x + dx;
+                int ny = y + dy;
+                
+                // Kiểm tra xem vị trí mới có hợp lệ không
+                if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && 
+                    maze[nx, ny] == 0 && !visited.Contains((nx, ny)))
+                {
+                    // Tạo một bản sao của đường đi hiện tại và thêm vị trí mới
+                    List<(int, int)> newPath = new List<(int, int)>(path) { (nx, ny) };
+                    queue.Enqueue(((nx, ny), newPath));
+                }
+            }
+        }
+        
+        // Không tìm thấy đường đi
+        return null;
+    }
+    
+    /// <summary>
+    /// Thuật toán A* để tìm đường đi ngắn nhất trong mê cung lục giác
+    /// </summary>
+    public static List<(int, int)> FindShortestPathAStar(int[,] maze, (int, int) start, (int, int) end)
+    {
+        int rows = maze.GetLength(0);
+        int cols = maze.GetLength(1);
+        
+        // Tập hợp đã xét
+        HashSet<(int, int)> closedSet = new HashSet<(int, int)>();
+        
+        // Tập hợp đang xét
+        HashSet<(int, int)> openSet = new HashSet<(int, int)> { start };
+        
+        // Từ đâu đến ô này
+        Dictionary<(int, int), (int, int)> cameFrom = new Dictionary<(int, int), (int, int)>();
+        
+        // Chi phí từ điểm bắt đầu đến ô hiện tại
+        Dictionary<(int, int), int> gScore = new Dictionary<(int, int), int>();
+        gScore[start] = 0;
+        
+        // Chi phí dự đoán từ điểm bắt đầu đến đích thông qua ô hiện tại
+        Dictionary<(int, int), int> fScore = new Dictionary<(int, int), int>();
+        fScore[start] = HeuristicCost(start, end);
+        
+        // Hàng đợi ưu tiên - (ô, điểm f)
+        SortedList<int, (int, int)> priorityQueue = new SortedList<int, (int, int)>(new DuplicateKeyComparer<int>());
+        priorityQueue.Add(fScore[start], start);
+        
+        while (openSet.Count > 0)
+        {
+            // Lấy ô có điểm f thấp nhất
+            (int, int) current = priorityQueue.Values[0];
+            priorityQueue.RemoveAt(0);
+            
+            // Đã đến đích
+            if (current.Equals(end))
+            {
+                return ReconstructPath(cameFrom, current);
+            }
+            
+            openSet.Remove(current);
+            closedSet.Add(current);
+            
+            // Kiểm tra tất cả các ô liền kề
+            foreach ((int dx, int dy) in Directions)
+            {
+                int nx = current.Item1 + dx;
+                int ny = current.Item2 + dy;
+                (int, int) neighbor = (nx, ny);
+                
+                // Kiểm tra tính hợp lệ
+                if (nx < 0 || nx >= rows || ny < 0 || ny >= cols || 
+                    maze[nx, ny] == 1 || closedSet.Contains(neighbor))
+                {
+                    continue;
+                }
+                
+                // Chi phí tạm thời từ điểm bắt đầu đến neighbor thông qua current
+                int tentativeGScore = gScore.GetValueOrDefault(current, int.MaxValue) + 1;
+                
+                if (!openSet.Contains(neighbor))
+                {
+                    openSet.Add(neighbor);
+                }
+                else if (tentativeGScore >= gScore.GetValueOrDefault(neighbor, int.MaxValue))
+                {
+                    continue; // Không phải là đường đi tốt hơn
+                }
+                
+                // Đường đi tốt nhất hiện tại
+                cameFrom[neighbor] = current;
+                gScore[neighbor] = tentativeGScore;
+                int f = tentativeGScore + HeuristicCost(neighbor, end);
+                fScore[neighbor] = f;
+                priorityQueue.Add(f, neighbor);
+            }
+        }
+        
+        // Không tìm thấy đường đi
+        return null;
+    }
+    
+    // Hàm heuristic cho A* - khoảng cách Manhattan đơn giản
+    private static int HeuristicCost((int, int) a, (int, int) b)
+    {
+        return Math.Abs(a.Item1 - b.Item1) + Math.Abs(a.Item2 - b.Item2);
+    }
+    
+    // Tái tạo đường đi từ điểm kết thúc
+    private static List<(int, int)> ReconstructPath(Dictionary<(int, int), (int, int)> cameFrom, (int, int) current)
+    {
+        List<(int, int)> path = new List<(int, int)> { current };
+        
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Insert(0, current);
+        }
+        
+        return path;
+    }
+    
+    // Bộ so sánh cho phép các khóa trùng lặp trong SortedList
+    private class DuplicateKeyComparer<TKey> : IComparer<TKey> where TKey : IComparable
+    {
+        public int Compare(TKey x, TKey y)
+        {
+            int result = x.CompareTo(y);
+            return result == 0 ? 1 : result; // Nếu bằng nhau, coi như lớn hơn để cho phép trùng lặp
+        }
+    }
+    
+    static void Main(string[] args)
+    {
+        // Ví dụ sử dụng
+        int[,] maze = new int[,]
+        {
+            {0, 0, 1, 0, 0, 0},
+            {0, 1, 0, 0, 1, 0},
+            {0, 0, 0, 1, 0, 0},
+            {1, 0, 1, 0, 0, 0},
+            {0, 0, 0, 0, 1, 0}
+        };
+        
+        (int, int) start = (0, 0);
+        (int, int) end = (4, 5);
+        
+        Console.WriteLine("Tìm đường với BFS:");
+        List<(int, int)> pathBFS = FindPathInHexMaze(maze, start, end);
+        
+        if (pathBFS != null)
+        {
+            Console.WriteLine("Tìm thấy đường đi:");
+            foreach ((int x, int y) in pathBFS)
+            {
+                Console.WriteLine($"({x}, {y})");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Không tìm thấy đường đi");
+        }
+        
+        Console.WriteLine("\nTìm đường ngắn nhất với A*:");
+        List<(int, int)> pathAStar = FindShortestPathAStar(maze, start, end);
+        
+        if (pathAStar != null)
+        {
+            Console.WriteLine("Tìm thấy đường đi ngắn nhất:");
+            foreach ((int x, int y) in pathAStar)
+            {
+                Console.WriteLine($"({x}, {y})");
+            }
+            Console.WriteLine($"Độ dài đường đi: {pathAStar.Count - 1} bước");
+        }
+        else
+        {
+            Console.WriteLine("Không tìm thấy đường đi");
+        }
+    }
+}

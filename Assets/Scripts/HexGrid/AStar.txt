@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,9 +28,6 @@ public class Pathfinding : MonoBehaviour
     {
         if (grid == null || start == null || end == null)
             return null;
-
-        // Debug the matrix
-        DebugMatrix(grid);
 
         // If start or end tiles are occupied, no path is possible
         if (end.IsOccupied)
@@ -74,14 +71,26 @@ public class Pathfinding : MonoBehaviour
             // Path found
             if (current == end)
             {
-                var path = ReconstructPath(cameFrom, start, end);
+                var path = ReconstructPath(cameFrom, end);
                 DebugPath(path);
                 return path;
             }
 
+            // Get the appropriate direction set based on the x-coordinate parity
+            (int dx, int dy)[] directions = current.X % 2 == 0 ? DIRECTIONS_EVEN : DIRECTIONS_ODD;
+
             // Explore all possible neighbors
-            foreach (var neighbor in current.AdjacentTiles)
+            foreach (var (dx, dy) in directions)
             {
+                int neighborX = current.X + dx;
+                int neighborY = current.Y + dy;
+
+                // Check if coordinates are valid
+                if (neighborX < 0 || neighborX >= rows || neighborY < 0 || neighborY >= cols)
+                    continue;
+
+                HexTile neighbor = grid[neighborX, neighborY];
+
                 // Skip occupied tiles
                 if (neighbor.IsOccupied)
                     continue;
@@ -154,17 +163,16 @@ public class Pathfinding : MonoBehaviour
     /// <summary>
     /// Reconstructs the path from end to start using the cameFrom map
     /// </summary>
-    private static List<HexTile> ReconstructPath(Dictionary<HexTile, HexTile> cameFrom, HexTile start, HexTile end)
+    private static List<HexTile> ReconstructPath(Dictionary<HexTile, HexTile> cameFrom, HexTile end)
     {
         var path = new List<HexTile>();
         HexTile current = end;
 
-        while (current != start)
+        while (cameFrom.ContainsKey(current))
         {
             path.Add(current);
             current = cameFrom[current];
         }
-        path.Add(start); // Add the start tile at the end
 
         path.Reverse();
         return path;
@@ -185,34 +193,6 @@ public class Pathfinding : MonoBehaviour
         foreach (var tile in path)
         {
             Debug.Log($"Tile at ({tile.X}, {tile.Y})");
-        }
-    }
-
-    /// <summary>
-    /// Debugs the matrix by logging the tiles
-    /// </summary>
-    private static void DebugMatrix(HexTile[,] grid)
-    {
-        int rows = grid.GetLength(0);
-        int cols = grid.GetLength(1);
-
-        Debug.Log("Matrix received by Pathfinding:");
-        for (int y = 0; y < cols; y++)
-        {
-            string row = "";
-            for (int x = 0; x < rows; x++)
-            {
-                HexTile tile = grid[x, y];
-                if (tile != null)
-                {
-                    row += tile.IsOccupied ? "1 " : "0 ";
-                }
-                else
-                {
-                    row += "X "; // Indicate a null tile
-                }
-            }
-            Debug.Log(row);
         }
     }
 

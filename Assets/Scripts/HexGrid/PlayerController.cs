@@ -9,6 +9,14 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f; // Speed of character movement
     private Coroutine currentMovementCoroutine; // Reference to the current movement coroutine
 
+    void Start()
+    {
+        if (hexGrid == null)
+        {
+            Debug.LogError("HexGrid is not assigned in the Inspector.");
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // Left click: Select character
@@ -21,8 +29,6 @@ public class PlayerController : MonoBehaviour
                 if (character != null)
                 {
                     selectedCharacter = character;
-                    Debug.Log($"Selected character {selectedCharacter}");
-                    Debug.Log($"Selected character at ({character.CurrentTile.X}, {character.CurrentTile.Y})");
                 }
             }
         }
@@ -35,17 +41,26 @@ public class PlayerController : MonoBehaviour
                 HexTile targetTile = hit.collider.GetComponent<HexTile>();
                 if (targetTile != null && !targetTile.IsOccupied)
                 {
-                    var path = Pathfinding.FindPath(hexGrid.Tiles, selectedCharacter.CurrentTile, targetTile);
-                    if (path != null && path.Count > 0)
+                    if (hexGrid != null && hexGrid.Tiles != null)
                     {
-                        DrawPath(path); // Draw the calculated path
-                        if (currentMovementCoroutine != null)
+                        Debug.Log("HexGrid and Tiles are properly assigned.");
+                        var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, selectedCharacter.CurrentTile, targetTile);
+                        if (path != null && path.Count > 0)
                         {
-                            StopCoroutine(currentMovementCoroutine); // Stop any existing movement
+                            DrawPath(path); // Draw the calculated path
+                            LogPath(path); // Log the path to the console
+                            if (currentMovementCoroutine != null)
+                            {
+                                StopCoroutine(currentMovementCoroutine); // Stop any existing movement
+                            }
+                            currentMovementCoroutine = StartCoroutine(MoveAlongPath(selectedCharacter, path));
                         }
-                        currentMovementCoroutine = StartCoroutine(MoveAlongPath(selectedCharacter, path));
+                        else Debug.Log("No path found!");
                     }
-                    else Debug.Log("No path found!");
+                    else
+                    {
+                        Debug.LogError("HexGrid or Tiles are not assigned properly.");
+                    }
                 }
             }
         }
@@ -66,8 +81,8 @@ public class PlayerController : MonoBehaviour
         {
             HexTile nextTile = path[i];
 
-            // Only move if the next tile is not occupied
-            if (!nextTile.IsOccupied)
+            // Only move if the next tile is not occupied and is adjacent
+            if (!nextTile.IsOccupied && AreTilesAdjacent(character.CurrentTile, nextTile))
             {
                 Vector3 startPosition = character.transform.position;
                 Vector3 endPosition = nextTile.WorldPosition;
@@ -96,7 +111,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Path blocked, stopping movement.");
+                Debug.Log("Path blocked or tiles are not adjacent, stopping movement.");
                 break;
             }
         }
@@ -105,11 +120,30 @@ public class PlayerController : MonoBehaviour
         currentMovementCoroutine = null;
     }
 
+    bool AreTilesAdjacent(HexTile currentTile, HexTile nextTile)
+    {
+        // Calculate the difference in coordinates
+        int dx = Mathf.Abs(currentTile.X - nextTile.X);
+        int dy = Mathf.Abs(currentTile.Y - nextTile.Y);
+
+        // Check if the tiles are adjacent
+        return (dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1);
+    }
+
     void DrawPath(List<HexTile> path)
     {
         for (int i = 0; i < path.Count - 1; i++)
         {
             Debug.DrawLine(path[i].WorldPosition, path[i + 1].WorldPosition, Color.green, 2f);
+        }
+    }
+
+    void LogPath(List<HexTile> path)
+    {
+        Debug.Log("Path found:");
+        foreach (var tile in path)
+        {
+            Debug.Log($"Tile at ({tile.X}, {tile.Y})");
         }
     }
 }
