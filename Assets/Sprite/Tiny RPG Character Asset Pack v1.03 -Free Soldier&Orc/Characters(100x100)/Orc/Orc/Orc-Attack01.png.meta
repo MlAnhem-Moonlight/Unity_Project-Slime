@@ -152,7 +152,7 @@ TextureImporter:
         width: 19
         height: 19
       alignment: 9
-      pivot: {x: 0.35, y: 0.4}
+      pivot: {x: 0.35, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
         width: 19
         height: 24
       alignment: 9
-      pivot: {x: 0.7, y: 0.32}
+      pivot: {x: 0.7, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
         width: 29
         height: 20
       alignment: 9
-      pivot: {x: 0.24, y: 0.63}
+      pivot: {x: 0.24, y: 0.7}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,7 +236,7 @@ TextureImporter:
         width: 26
         height: 19
       alignment: 9
-      pivot: {x: 0.3, y: 0.65}
+      pivot: {x: 0.3, y: 0.7}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -265,6 +265,7 @@ TextureImporter:
       Orc-Attack01_3: 478835344
       Orc-Attack01_4: 1025380772
       Orc-Attack01_5: 1101481413
+      Orc-Attack01_6: 1089579968
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

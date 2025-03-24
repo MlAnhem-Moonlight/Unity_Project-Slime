@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,17 +8,16 @@ public class Pathfinding : MonoBehaviour
     public static readonly (int dx, int dy)[] DIRECTIONS_EVEN = { (-1, 0), (-1, 1), (0, -1), (0, 1), (1, 0), (1, 1) };
     public static readonly (int dx, int dy)[] DIRECTIONS_ODD = { (-1, -1), (-1, 0), (0, -1), (0, 1), (1, -1), (1, 0) };
 
-    // Movement costs - explicitly set to 1 to prioritize fewest cells
-    private const int MOVEMENT_COST = 1;
+    // Movement costs - can be adjusted based on game requirements
+    //private const int STRAIGHT_COST = 10;
 
     // Public parameters that can be adjusted in Unity Inspector
     [Tooltip("Heuristic weight - higher values prioritize paths toward the goal")]
     [Range(1, 5)]
-    public int heuristicWeight = 2; // Increased to prioritize direct paths
+    public int heuristicWeight = 1;
 
     /// <summary>
     /// Finds the shortest path between start and end hexagonal tiles using A* algorithm
-    /// Optimized to prioritize paths with fewest cells
     /// </summary>
     /// <param name="grid">2D array of hexagonal tiles</param>
     /// <param name="start">Starting tile</param>
@@ -47,17 +46,14 @@ public class Pathfinding : MonoBehaviour
         // Priority queue for open set with efficient ordering
         var openSet = new SortedSet<PathNode>(new PathNodeComparer());
         var openSetTracker = new HashSet<HexTile>(); // For O(1) Contains() operations
-        var closedSet = new HashSet<HexTile>(); // Track already evaluated nodes
 
         // Maps for tracking
         var cameFrom = new Dictionary<HexTile, HexTile>();
         var gScore = new Dictionary<HexTile, int>();
-        var fScore = new Dictionary<HexTile, int>();
 
         // Initialize scores
         gScore[start] = 0;
         int initialFScore = CalculateHeuristic(start, end);
-        fScore[start] = initialFScore;
         openSet.Add(new PathNode(start, initialFScore, 0));
         openSetTracker.Add(start);
 
@@ -71,43 +67,44 @@ public class Pathfinding : MonoBehaviour
             var currentNode = openSet.Min;
             HexTile current = currentNode.Tile;
 
-            // Path found
-            if (current == end)
-            {
-                Debug.Log($"Path found with {gScore[current]} steps");
-                var path = ReconstructPath(cameFrom, start, end);
-                return path;
-            }
-
             // Manage the open sets
             openSet.Remove(currentNode);
             openSetTracker.Remove(current);
-            closedSet.Add(current);
+
+            // Path found
+            if (current == end)
+            {
+                var path = ReconstructPath(cameFrom, start, end);
+                //DebugPath(path);
+                return path;
+            }
 
             // Explore all possible neighbors
-            foreach (var neighbor in GetValidNeighbors(current, grid, closedSet))
+            foreach (var neighbor in current.AdjacentTiles)
             {
-                // Skip occupied tiles and already processed tiles
-                if (neighbor.IsOccupied || closedSet.Contains(neighbor))
+                // Skip occupied tiles
+                if (neighbor.IsOccupied)
                     continue;
 
-                // Calculate new path score - always increment by 1 to ensure fewest cells
-                int tentativeGScore = gScore[current] + MOVEMENT_COST;
+                // Apply movement cost - this can be expanded to consider terrain types
+                //int movementCost = STRAIGHT_COST;
 
-                // If this path is better than any previously found or node not yet discovered
+                // Calculate new path score
+                int tentativeGScore = gScore[current]; //+ movementCost;
+
+                // If this path is better than any previously found
                 if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
                 {
                     // Update the best path
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
 
-                    // Calculate F score with weighted heuristic to prioritize direct paths
-                    int newFScore = tentativeGScore + CalculateHeuristic(neighbor, end) * 2;
-                    fScore[neighbor] = newFScore;
+                    // Calculate and add to open set if not already there
+                    int fScore = tentativeGScore + CalculateHeuristic(neighbor, end);
 
                     if (!openSetTracker.Contains(neighbor))
                     {
-                        var newNode = new PathNode(neighbor, newFScore, tentativeGScore);
+                        var newNode = new PathNode(neighbor, fScore, tentativeGScore);
                         openSet.Add(newNode);
                         openSetTracker.Add(neighbor);
                     }
@@ -126,66 +123,18 @@ public class Pathfinding : MonoBehaviour
                             openSet.Remove(oldNode);
                         }
 
-                        openSet.Add(new PathNode(neighbor, newFScore, tentativeGScore));
+                        openSet.Add(new PathNode(neighbor, fScore, tentativeGScore));
                     }
                 }
             }
         }
 
         // No path found or depth limit reached
-        Debug.LogWarning($"No path found after {iterations} iterations");
         return null;
     }
 
     /// <summary>
-    /// Gets valid neighbors for a hex tile, filtering out invalid positions
-    /// </summary>
-    private static List<HexTile> GetValidNeighbors(HexTile current, HexTile[,] grid, HashSet<HexTile> closedSet)
-    {
-        var neighbors = new List<HexTile>();
-
-        // Just return the pre-calculated adjacent tiles if available
-        if (current.AdjacentTiles != null && current.AdjacentTiles.Count > 0)
-        {
-            foreach (var neighbor in current.AdjacentTiles)
-            {
-                if (neighbor != null && !neighbor.IsOccupied && !closedSet.Contains(neighbor))
-                {
-                    neighbors.Add(neighbor);
-                }
-            }
-            return neighbors;
-        }
-
-        // Fallback: Calculate adjacent tiles manually using directions
-        int rows = grid.GetLength(0);
-        int cols = grid.GetLength(1);
-
-        // Choose direction set based on y-coordinate parity
-        var directions = current.Y % 2 == 0 ? DIRECTIONS_EVEN : DIRECTIONS_ODD;
-
-        foreach (var dir in directions)
-        {
-            int nx = current.X + dir.dx;
-            int ny = current.Y + dir.dy;
-
-            // Check if within grid bounds
-            if (nx >= 0 && nx < rows && ny >= 0 && ny < cols)
-            {
-                HexTile neighbor = grid[nx, ny];
-                if (neighbor != null && !neighbor.IsOccupied && !closedSet.Contains(neighbor))
-                {
-                    neighbors.Add(neighbor);
-                }
-            }
-        }
-
-        return neighbors;
-    }
-
-    /// <summary>
     /// Calculates the heuristic distance between two hex tiles
-    /// Enhanced to better prioritize direct paths
     /// </summary>
     private static int CalculateHeuristic(HexTile a, HexTile b)
     {
@@ -199,7 +148,7 @@ public class Pathfinding : MonoBehaviour
         int bz = -bx - by;
 
         // Manhattan distance in cube coordinates
-        return Math.Max(Math.Abs(ax - bx), Math.Max(Math.Abs(ay - by), Math.Abs(az - bz)));
+        return Math.Max(Math.Abs(ax - bx), Math.Max(Math.Abs(ay - by), Math.Abs(az - bz))) * 10;
     }
 
     /// <summary>
@@ -213,21 +162,30 @@ public class Pathfinding : MonoBehaviour
         while (current != start)
         {
             path.Add(current);
-            if (!cameFrom.ContainsKey(current))
-            {
-                Debug.LogError("Path reconstruction error: broken path chain");
-                return null;
-            }
             current = cameFrom[current];
         }
         path.Add(start); // Add the start tile at the end
 
         path.Reverse();
-
-        // Debug path length
-        Debug.Log($"Final path contains {path.Count} tiles from {start.X},{start.Y} to {end.X},{end.Y}");
-
         return path;
+    }
+
+    /// <summary>
+    /// Debugs the path by logging the tiles
+    /// </summary>
+    private static void DebugPath(List<HexTile> path)
+    {
+        if (path == null || path.Count == 0)
+        {
+            Debug.Log("No path found.");
+            return;
+        }
+
+        Debug.Log("Path found:");
+        foreach (var tile in path)
+        {
+            Debug.Log($"Tile at ({tile.X}, {tile.Y})");
+        }
     }
 
     /// <summary>
@@ -238,7 +196,24 @@ public class Pathfinding : MonoBehaviour
         int rows = grid.GetLength(0);
         int cols = grid.GetLength(1);
 
-        Debug.Log($"Pathfinding on grid with dimensions: {rows}x{cols}");
+        //Debug.Log("Matrix received by Pathfinding:");
+        for (int y = 0; y < cols; y++)
+        {
+            string row = "";
+            for (int x = 0; x < rows; x++)
+            {
+                HexTile tile = grid[x, y];
+                if (tile != null)
+                {
+                    row += tile.IsOccupied ? "1 " : "0 ";
+                }
+                else
+                {
+                    row += "X "; // Indicate a null tile
+                }
+            }
+            //Debug.Log(row);
+        }
     }
 
     /// <summary>
@@ -259,21 +234,19 @@ public class Pathfinding : MonoBehaviour
     }
 
     /// <summary>
-    /// Enhanced comparer for PathNode to prioritize paths with fewest cells
+    /// Comparer for PathNode to be used in the priority queue
     /// </summary>
     private class PathNodeComparer : IComparer<PathNode>
     {
         public int Compare(PathNode x, PathNode y)
         {
-            // Compare by F score first (lowest F score is prioritized)
+            // Compare by F score first
             int fComparison = x.FScore.CompareTo(y.FScore);
             if (fComparison != 0)
                 return fComparison;
 
-            // If F scores are equal, prefer paths with lower G scores
-            // (This is the opposite of the original implementation and 
-            // ensures we prioritize shorter paths)
-            int gComparison = x.GScore.CompareTo(y.GScore);
+            // If F scores are equal, compare by G score (prefer higher G scores)
+            int gComparison = y.GScore.CompareTo(x.GScore);
             if (gComparison != 0)
                 return gComparison;
 

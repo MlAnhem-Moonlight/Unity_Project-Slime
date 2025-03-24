@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public HexGrid hexGrid;
-    private Character selectedCharacter;
+    public Character selectedCharacter;
     public float moveSpeed = 5f; // Speed of character movement
     private Coroutine currentMovementCoroutine; // Reference to the current movement coroutine
 
@@ -19,20 +19,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Left click: Select character
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-            if (hit.collider != null)
-            {
-                Character character = hit.collider.GetComponent<Character>();
-                if (character != null)
-                {
-                    selectedCharacter = character;
-                }
-            }
-        }
-        else if (Input.GetMouseButtonDown(1) && selectedCharacter != null) // Right click: Move character
+
+        if (Input.GetMouseButtonDown(1) && selectedCharacter != null) // Right click: Move character
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
@@ -43,12 +31,12 @@ public class PlayerController : MonoBehaviour
                 {
                     if (hexGrid != null && hexGrid.Tiles != null)
                     {
-                        Debug.Log("HexGrid and Tiles are properly assigned.");
-                        var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, selectedCharacter.CurrentTile, targetTile);
+                        //Debug.Log("HexGrid and Tiles are properly assigned.");
+                        var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, selectedCharacter.currentTile, targetTile);
                         if (path != null && path.Count > 0)
                         {
                             DrawPath(path); // Draw the calculated path
-                            LogPath(path); // Log the path to the console
+                            //LogPath(path); // Log the path to the console
                             if (currentMovementCoroutine != null)
                             {
                                 StopCoroutine(currentMovementCoroutine); // Stop any existing movement
@@ -69,12 +57,12 @@ public class PlayerController : MonoBehaviour
     IEnumerator MoveAlongPath(Character character, List<HexTile> path)
     {
         // Skip the first tile if it's the current tile
-        int startIndex = path[0] == character.CurrentTile ? 1 : 0;
+        int startIndex = path[0] == character.currentTile ? 1 : 0;
 
         // Mark the starting tile as not occupied
-        if (character.CurrentTile != null)
+        if (character.currentTile != null)
         {
-            character.CurrentTile.IsOccupied = false;
+            character.currentTile.IsOccupied = false;
         }
 
         for (int i = startIndex; i < path.Count; i++)
@@ -82,7 +70,7 @@ public class PlayerController : MonoBehaviour
             HexTile nextTile = path[i];
 
             // Only move if the next tile is not occupied and is adjacent
-            if (!nextTile.IsOccupied && AreTilesAdjacent(character.CurrentTile, nextTile))
+            if (!nextTile.IsOccupied && AreTilesAdjacent(character.currentTile, nextTile))
             {
                 Vector3 startPosition = character.transform.position;
                 Vector3 endPosition = nextTile.WorldPosition;
@@ -99,12 +87,12 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // Update the character's current tile
-                if (character.CurrentTile != null)
+                if (character.currentTile != null)
                 {
-                    character.CurrentTile.IsOccupied = false;
+                    character.currentTile.IsOccupied = false;
                 }
-                character.CurrentTile = nextTile;
-                character.CurrentTile.IsOccupied = true;
+                character.currentTile = nextTile;
+                character.currentTile.IsOccupied = true;
 
                 // Reduce stamina for each tile moved
                 character.ReduceStamina(1);
@@ -128,6 +116,77 @@ public class PlayerController : MonoBehaviour
 
         // Check if the tiles are adjacent
         return (dx == 1 && dy == 0) || (dx == 0 && dy == 1) || (dx == 1 && dy == 1);
+    }
+    public IEnumerator MoveCharacterAlongPath(Character character, List<HexTile> path)
+    {
+        // Skip the first tile if it's the current tile
+        int startIndex = path[0] == character.currentTile ? 1 : 0;
+
+        // Mark the starting tile as not occupied
+        if (character.currentTile != null)
+        {
+            character.currentTile.IsOccupied = false;
+        }
+
+        for (int i = startIndex; i < path.Count; i++)
+        {
+            HexTile nextTile = path[i];
+
+            // Only move if the next tile is not occupied and is adjacent
+            if (!nextTile.IsOccupied && AreTilesAdjacent(character.currentTile, nextTile))
+            {
+                Vector3 startPosition = character.transform.position;
+                Vector3 endPosition = nextTile.WorldPosition;
+                float journeyLength = Vector3.Distance(startPosition, endPosition);
+                float startTime = Time.time;
+
+                // Smoothly move to the next tile
+                while (Vector3.Distance(character.transform.position, endPosition) > 0.01f)
+                {
+                    float distCovered = (Time.time - startTime) * moveSpeed;
+                    float fractionOfJourney = distCovered / journeyLength;
+                    character.transform.position = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
+                    yield return null;
+                }
+
+                // Update the character's current tile
+                if (character.currentTile != null)
+                {
+                    character.currentTile.IsOccupied = false;
+                }
+                character.currentTile = nextTile;
+                character.currentTile.IsOccupied = true;
+
+                // Reduce stamina for each tile moved
+                character.ReduceStamina(1);
+
+                // Check if out of stamina
+                if (character.currentStamina <= 0)
+                {
+                    Debug.Log("Out of stamina, ending movement.");
+                    break;
+                }
+            }
+            else
+            {
+                Debug.Log("Path blocked or tiles are not adjacent, stopping movement.");
+                break;
+            }
+        }
+
+        // Clear the current movement coroutine reference when done
+        currentMovementCoroutine = null;
+    }
+
+    bool PathIsWithinStaminaRange(Character character, List<HexTile> path)
+    {
+        // Calculate the path length (minus the starting tile)
+        int pathLength = path.Count > 0 && path[0] == character.currentTile
+            ? path.Count - 1
+            : path.Count;
+
+        // Check if the character has enough stamina to complete the path
+        return pathLength <= character.currentStamina;
     }
 
     void DrawPath(List<HexTile> path)

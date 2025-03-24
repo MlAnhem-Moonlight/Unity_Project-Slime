@@ -41,6 +41,7 @@ public class ActivateButton : MonoBehaviour
             instantiatedIcon = null;
         }
     }
+
 }
 
 

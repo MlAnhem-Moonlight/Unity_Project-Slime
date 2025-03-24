@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e7a0accea483fb64a9472f0c7cc8d3c5, type: 3}
-  m_Color: {r: 0.6946808, g: 1, b: 0.6839622, a: 0.25490198}
+  m_Color: {r: 0.96611744, g: 1, b: 0.759434, a: 0.5254902}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   Y: 0
   WorldPosition: {x: 0, y: 0, z: 0}
   IsOccupied: 0
+  AdjacentTiles: []
 --- !u!60 &1040292754822167574
 PolygonCollider2D:
   m_ObjectHideFlags: 0

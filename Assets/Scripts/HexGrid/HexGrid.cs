@@ -49,6 +49,18 @@ public class HexGrid : MonoBehaviour
         }
     }
 
+    public List<HexTile> GetAdjacentTiles(HexTile tile)
+    {
+        List<HexTile> adjacentTiles = new List<HexTile>();
+        foreach (HexTile adjacentTile in tile.AdjacentTiles)
+        {
+            if (!adjacentTile.IsOccupied)
+            {
+                adjacentTiles.Add(adjacentTile);
+            }
+        }
+        return adjacentTiles;
+    }
     void GenerateHexGrid2D()
     {
         Tiles = new HexTile[hexWidth, hexHeight]; // 2D array of HexTiles
@@ -88,7 +100,7 @@ public class HexGrid : MonoBehaviour
         }
 
         isGridGenerated = true;
-        Debug.Log("Grid generation complete, invoking OnGridGenerated.");
+        //Debug.Log("Grid generation complete, invoking OnGridGenerated.");
         OnGridGenerated?.Invoke();
     }
 
@@ -214,7 +226,7 @@ public class HexGrid : MonoBehaviour
     {
         int width = grid.GetLength(0);
         int height = grid.GetLength(1);
-        Debug.Log("Grid received by CalculateAdjacentTiles:");
+        //Debug.Log("Grid received by CalculateAdjacentTiles:");
         for (int y = 0; y < height; y++)
         {
             string row = "";

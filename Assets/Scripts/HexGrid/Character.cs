@@ -1,28 +1,61 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public HexTile CurrentTile; // Ô mà nhân vật đang đứng
-    public string CharacterName; // Tên nhân vật (nếu cần)
-    public int health = 100;
-    public int stamina = 10; // Thể lực của nhân vật
+    [Header("Character Info")]
+    public string characterName;
+    public string team; // "Player" or "Enemy"
+    public bool isAI = false; // Whether this character is controlled by AI
+
+    [Header("Stats")]
+    public int maxHealth = 100;
+    public int currentHealth;
+    public int maxStamina = 5;
+    public int currentStamina;
+    public int attackPower = 20;
+    public int defense = 10;
+
+    [Header("Position")]
+    public HexTile currentTile; // Tile where character is standing
+
     private bool isMyTurn = false;
 
     private void Start()
     {
+        // Initialize stats
+        currentHealth = maxHealth;
+        currentStamina = maxStamina;
+        characterName = name; // Use object name as default character name
+
+        // Check the tag of the object and set the team accordingly
+        if (CompareTag("Ally"))
+        {
+            team = "Player";
+        }
+        else if (CompareTag("Enemy"))
+        {
+            team = "Enemy";
+            isAI = true; // Enemies are controlled by AI
+        }
+        else
+        {
+            Debug.LogWarning("Character tag is neither 'Ally' nor 'Enemy'.");
+        }
+
         HexGrid hexGrid = FindObjectOfType<HexGrid>();
         if (hexGrid != null)
         {
             if (hexGrid.IsGridGenerated())
             {
-                // Nếu lưới đã được tạo, gọi trực tiếp OnGridGenerated
+                // If grid is already generated, call OnGridGenerated directly
                 OnGridGenerated();
             }
             else
             {
-                // Đăng ký sự kiện OnGridGenerated nếu lưới chưa tạo
+                // Register for OnGridGenerated event if grid isn't created yet
                 hexGrid.OnGridGenerated += OnGridGenerated;
-                Debug.Log("HexGrid found, subscribing to OnGridGenerated.");
             }
         }
         else
@@ -33,13 +66,12 @@ public class Character : MonoBehaviour
 
     private void OnGridGenerated()
     {
-        Debug.Log("OnGridGenerated event triggered.");
-        // Tìm HexTile gần nhất và đặt làm CurrentTile
-        CurrentTile = FindNearestHexTile();
-        if (CurrentTile != null)
+        // Find nearest HexTile and set as currentTile
+        currentTile = FindNearestHexTile();
+        if (currentTile != null)
         {
-            PlaceOnTile(CurrentTile);
-            Debug.Log($"{CharacterName} placed on tile ({CurrentTile.X}, {CurrentTile.Y}).");
+            PlaceOnTile(currentTile);
+            Debug.Log($"{characterName} placed on tile ({currentTile.X}, {currentTile.Y}).");
         }
         else
         {
@@ -49,28 +81,28 @@ public class Character : MonoBehaviour
 
     public void PlaceOnTile(HexTile tile)
     {
-        // Di chuyển nhân vật đến ô
-        if (CurrentTile != null)
+        // Move character to tile
+        if (currentTile != null)
         {
-            CurrentTile.IsOccupied = false; // Bỏ đánh dấu ô cũ
+            currentTile.IsOccupied = false; // Unmark old tile
         }
-        CurrentTile = tile;
-        tile.IsOccupied = true; // Đánh dấu ô mới
-        transform.position = tile.WorldPosition; // Đặt vị trí nhân vật tại tâm ô
+        currentTile = tile;
+        tile.IsOccupied = true; // Mark new tile
+        transform.position = tile.WorldPosition; // Set character position at tile center
     }
 
     public void MoveToTile(HexTile newTile)
     {
-        if (!newTile.IsOccupied) // Chỉ di chuyển nếu ô không bị chiếm
+        if (!newTile.IsOccupied) // Only move if tile is not occupied
         {
-            if (CurrentTile != null)
+            if (currentTile != null)
             {
-                CurrentTile.IsOccupied = false; // Bỏ đánh dấu ô cũ
+                currentTile.IsOccupied = false; // Unmark old tile
             }
-            CurrentTile = newTile;
-            CurrentTile.IsOccupied = true; // Đánh dấu ô mới
-            transform.position = newTile.WorldPosition; // Cập nhật vị trí
-            Debug.Log($"{CharacterName} moved to tile ({newTile.X}, {newTile.Y}).");
+            currentTile = newTile;
+            currentTile.IsOccupied = true; // Mark new tile
+            transform.position = newTile.WorldPosition; // Update position
+            Debug.Log($"{characterName} moved to tile ({newTile.X}, {newTile.Y}).");
         }
         else
         {
@@ -78,11 +110,18 @@ public class Character : MonoBehaviour
         }
     }
 
+    // Reduce stamina when moving or performing actions
     public void ReduceStamina(int amount)
     {
-        stamina -= amount;
-        if (stamina < 0) stamina = 0;
-        Debug.Log($"{CharacterName} has {stamina} stamina left.");
+        currentStamina = Mathf.Max(0, currentStamina - amount);
+        Debug.Log($"{characterName} stamina reduced to {currentStamina}");
+    }
+
+    // Reset stamina at the start of the character's turn
+    public void ResetStaminaForTurn()
+    {
+        currentStamina = maxStamina;
+        Debug.Log($"{characterName} stamina reset to {currentStamina}");
     }
 
     private HexTile FindNearestHexTile()
@@ -92,7 +131,7 @@ public class Character : MonoBehaviour
         HexTile nearestTile = null;
         float minDistance = float.MaxValue;
 
-        // Tìm ô Hex gần nhất
+        // Find nearest Hex tile
         foreach (HexTile tile in tiles)
         {
             float distance = Vector3.Distance(transform.position, tile.WorldPosition);
@@ -108,24 +147,27 @@ public class Character : MonoBehaviour
     public void StartTurn()
     {
         isMyTurn = true;
-        Debug.Log($"{CharacterName}'s turn started.");
-        // Thêm các logic liên quan đến bắt đầu lượt
+        ResetStaminaForTurn();
+        Debug.Log($"{characterName}'s turn started.");
+        // Add additional turn start logic here
     }
 
     public void EndTurn()
     {
         isMyTurn = false;
-        Debug.Log($"{CharacterName}'s turn ended.");
+        Debug.Log($"{characterName}'s turn ended.");
     }
 
-    public void PerformAction(Character target)
+    // Attack another character
+    public void Attack(Character target)
     {
+        if (!IsAlive() || !target.IsAlive())
+            return;
+
         if (isMyTurn)
         {
-            // Ví dụ: Hành động tấn công
-            int damage = 10;
-            target.TakeDamage(damage);
-            Debug.Log($"{CharacterName} attacked {target.CharacterName} for {damage} damage.");
+            Debug.Log($"{characterName} attacks {target.characterName}");
+            target.TakeDamage(attackPower);
         }
         else
         {
@@ -133,14 +175,60 @@ public class Character : MonoBehaviour
         }
     }
 
+    // Take damage from attacks
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        Debug.Log($"{CharacterName} took {damage} damage. Remaining health: {health}");
-        if (health <= 0)
+        if (damage < 0)
         {
-            Debug.Log($"{CharacterName} has been defeated!");
-            gameObject.SetActive(false); // Vô hiệu hóa nhân vật nếu bị đánh bại
+            Debug.LogWarning("Damage cannot be negative.");
+            return;
         }
+
+        // Apply defense to reduce damage
+        int actualDamage = Mathf.Max(1, damage - defense / 2);
+        currentHealth = Mathf.Max(0, currentHealth - actualDamage);
+
+        Debug.Log($"{characterName} took {actualDamage} damage. Health: {currentHealth}/{maxHealth}");
+
+        // Check if the character died
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    // Check if the character is still alive
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
+    // Handle death
+    private void Die()
+    {
+        Debug.Log($"{characterName} has died!");
+
+        // Clear the tile's occupied status
+        if (currentTile != null)
+        {
+            currentTile.IsOccupied = false;
+        }
+
+        // Visual indication of death
+        // You could trigger death animation, change sprite color, etc.
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        }
+
+        // Optionally disable collider
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+
+        gameObject.SetActive(false); // Disable character if defeated
     }
 }

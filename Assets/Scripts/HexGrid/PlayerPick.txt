@@ -1,0 +1,15 @@
+        if (Input.GetMouseButtonDown(0)) // Left click: Select character
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+            
+            if (hit.collider != null)
+            {
+                Character character = hit.collider.GetComponent<Character>();
+                Debug.Log(character.name);
+                if (character != null)
+                {
+                    selectedCharacter = character;
+                }
+            }
+        }
