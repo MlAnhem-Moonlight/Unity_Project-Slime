@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // For UI components
 
@@ -11,9 +12,9 @@ public class TurnManager : MonoBehaviour
     public float turnDelay = 0.5f; // Delay between turns in seconds
 
     [Header("UI References")]
-    public Text currentTurnText; // UI text to display current character's turn
+    public TMP_Text currentTurnText; // UI text to display current character's turn
     public GameObject gameOverPanel; // Panel to show when game ends
-    public Text gameResultText; // Text to display win/loss message
+    public TMP_Text gameResultText; // Text to display win/loss message
 
     private List<Character> turnOrder = new List<Character>();
     private int currentTurnIndex = 0;

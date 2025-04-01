@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
         characterName = name; // Use object name as default character name
 
         // Check the tag of the object and set the team accordingly
-        if (CompareTag("Ally"))
+        if (CompareTag("Ally") || CompareTag("Player"))
         {
             team = "Player";
         }

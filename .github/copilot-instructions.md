@@ -2,7 +2,7 @@
 - Project name: Slime
 - Unity version: Unity 2022.3.6f1
 - Active game object:
-  - Name: EvtManager
+  - Name: Demon
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Demon
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
