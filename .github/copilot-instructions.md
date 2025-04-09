@@ -2,7 +2,7 @@
 - Project name: Slime
 - Unity version: Unity 2022.3.6f1
 - Active game object:
-  - Name: Demon
+  - Name: HintBG
   - Tag: Untagged
-  - Layer: Demon
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

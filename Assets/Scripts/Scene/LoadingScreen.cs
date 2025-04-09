@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using System.Collections;
 using UnityEditor;
+
+// Explicitly alias namespaces for disambiguation
+using UI = UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
     public GameObject loadingScreen;
-    public Slider progressBar;
+    public UI.Slider progressBar; // Use Slider from UnityEngine.UI
     public SceneAsset gameScene;
-    public Image hint;
+    public UI.Image hint; // Use Image from UnityEngine.UI
+    public TMPro.TMP_Text text; 
 
-    private bool isSceneActivationTriggered = false;
+    private bool isSceneActivationTriggered = false; // To track user input
 
     public void LoadScene()
     {
@@ -25,32 +28,42 @@ public class LoadingScreen : MonoBehaviour
 
     IEnumerator LoadAsynchronously(string sceneName)
     {
+        // Start loading the scene asynchronously
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
-        operation.allowSceneActivation = false;
+        operation.allowSceneActivation = false; // Prevent automatic scene activation
 
-        loadingScreen.SetActive(true);
+        if (loadingScreen != null)
+            loadingScreen.SetActive(true); // Show the loading screen
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            progressBar.value = progress;
-            Debug.Log(operation.progress);
-            if (operation.progress >= 0.9f)
-            {
-                progressBar.gameObject.SetActive(false);
-                hint.gameObject.SetActive(true);
-                
+            // Calculate progress manually
+            float progress = Mathf.Clamp01(operation.progress / 0.9f); // Normalize progress between 0 and 0.9
+            if (progressBar != null)
+                progressBar.value = progress;
 
+            Debug.Log($"Progress: {progress * 100}%");
+
+            // Check if loading is complete
+            if (operation.progress >= 0.9f && !isSceneActivationTriggered)
+            {
+                // Scene is ready but waiting for player input
+                if (hint != null)
+                    hint.enabled = true;
+
+                text.SetText("Press Space to activate the scene");
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     isSceneActivationTriggered = true;
-                    operation.allowSceneActivation = true;
+                    operation.allowSceneActivation = true; // Activate the scene
                 }
             }
 
             yield return null;
         }
 
-        loadingScreen.SetActive(false);
+        // Hide the loading screen after activation
+        if (loadingScreen != null)
+            loadingScreen.SetActive(false);
     }
 }
