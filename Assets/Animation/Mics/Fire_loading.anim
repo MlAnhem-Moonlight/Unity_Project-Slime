@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fire(Horizontal)
+  m_Name: Fire_loading
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -22,24 +22,24 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 193353103, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.071428575
+    - time: 0.05
       value: {fileID: -1284986296, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.14285715
+    - time: 0.1
       value: {fileID: -1988743996, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.21428572
+    - time: 0.15
       value: {fileID: -845824447, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.2857143
+    - time: 0.2
       value: {fileID: 2135804352, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.35714287
+    - time: 0.25
       value: {fileID: -1362530713, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
-    - time: 0.42857143
+    - time: 0.3
       value: {fileID: 1094457666, guid: 01acc51ea404a5c4cbddf02878aa4680, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
     flags: 2
-  m_SampleRate: 14
+  m_SampleRate: 20
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -68,7 +68,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.35000002
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

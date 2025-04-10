@@ -82,6 +82,7 @@ public class ChosePath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log(Path);
             ChoosePath1(Path);
         }
     }
