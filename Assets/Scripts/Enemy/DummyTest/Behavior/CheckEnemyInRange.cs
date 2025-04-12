@@ -1,26 +1,30 @@
-using BehaviorTree;
+﻿using BehaviorTree;
 using UnityEngine;
 
 public class CheckEnemyInRange : Nodes
 {
     private Transform _transform;
     private float _range;
+    private LayerMask _layerName;
 
-    public CheckEnemyInRange(Transform transform, float range)
+    public CheckEnemyInRange(Transform transform, float range, LayerMask layer)
     {
         _transform = transform;
         _range = range;
+        _layerName = layer;
     }
 
     public override NodeState Evaluate()
     {
+        // Lấy danh sách các đối tượng trong bán kính
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(_transform.position, _range);
         Transform closestTarget = null;
         float closestDistance = float.MaxValue;
 
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Human"))
+            // Kiểm tra nếu layer của đối tượng thuộc LayerMask
+            if (((1 << hitCollider.gameObject.layer) & _layerName) != 0)
             {
                 float distance = Vector3.Distance(_transform.position, hitCollider.transform.position);
                 if (distance < closestDistance)
@@ -33,6 +37,7 @@ public class CheckEnemyInRange : Nodes
 
         if (closestTarget != null)
         {
+            // Lưu trữ mục tiêu gần nhất trong cây hành vi
             parent.SetData("target", closestTarget);
             state = NodeState.SUCCESS;
         }
@@ -43,4 +48,5 @@ public class CheckEnemyInRange : Nodes
 
         return state;
     }
+
 }

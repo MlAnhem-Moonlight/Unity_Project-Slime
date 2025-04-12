@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class TonMovement : Nodes
 {
     private Transform _transform;
@@ -31,9 +32,23 @@ public class TonMovement : Nodes
         }
 
         float step = _speed * Time.deltaTime;
+
+        // Move the object towards the target while keeping X and Z fixed
         Vector3 targetPosition = new Vector3(_target.position.x, _transform.position.y, _transform.position.z);
         _transform.position = Vector3.MoveTowards(_transform.position, targetPosition, step);
 
+        // Adjust the Y-axis rotation to face the target
+        if (_target.position.x > _transform.position.x) // Target is to the right
+        {
+            _transform.rotation = Quaternion.Euler(0, 0, 0); // Face right (default rotation)
+        }
+        else if (_target.position.x < _transform.position.x) // Target is to the left
+        {
+            _transform.rotation = Quaternion.Euler(0, 180, 0); // Face left (flip horizontally)
+        }
+
+
+        // Check if object reached the target
         if (Vector3.Distance(_transform.position, targetPosition) < 0.1f)
         {
             state = NodeState.SUCCESS;

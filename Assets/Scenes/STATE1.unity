@@ -264,7 +264,7 @@ MonoBehaviour:
   hero: {fileID: 122042631}
   demonKing: {fileID: 662284934}
   state2_1: {fileID: 102900000, guid: 8eef1bd53162ddd4db4c39585c2034d3, type: 3}
-  state2_2: {fileID: 102900000, guid: b1dcda3477bbeb3419e93cc12330e258, type: 3}
+  state2_2: {fileID: 102900000, guid: d8b5f3c410da8764391baf1a111bbc5e, type: 3}
 --- !u!61 &45590164
 BoxCollider2D:
   m_ObjectHideFlags: 0
