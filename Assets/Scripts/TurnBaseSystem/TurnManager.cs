@@ -88,25 +88,16 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator StartNextTurn()
     {
-        // Wait for the specified delay
         yield return new WaitForSeconds(turnDelay);
 
-        // Check for game over condition
         if (CheckGameOver())
-        {
             yield break;
-        }
 
-        // End of round, generate new turn order
         if (currentTurnIndex >= turnOrder.Count)
-        {
             GenerateRandomTurnOrder();
-        }
 
-        // Get the character whose turn it is
         Character currentCharacter = turnOrder[currentTurnIndex];
 
-        // Skip dead characters
         if (!currentCharacter.IsAlive())
         {
             currentTurnIndex++;
@@ -114,32 +105,32 @@ public class TurnManager : MonoBehaviour
             yield break;
         }
 
-        // Automatically select the character in the PlayerController
         playerController.selectedCharacter = currentCharacter;
-
-        // Reset character's action points/stamina for this turn
         currentCharacter.ResetStaminaForTurn();
 
-        // Update UI to show whose turn it is
         if (currentTurnText != null)
-        {
             currentTurnText.text = "Current Turn: " + currentCharacter.name;
-        }
 
         Debug.Log("Starting turn for " + currentCharacter.name);
 
-        // Set turn as active
         isTurnActive = true;
 
-        // If the character is an AI, handle its turn automatically
+        // Nếu là AI, tự động xử lý lượt
         if (currentCharacter.isAI)
         {
-            yield return StartCoroutine(HandleAITurn(currentCharacter));
+            AIController aiController = FindObjectOfType<AIController>();
+            if (aiController != null)
+            {
+                yield return StartCoroutine(aiController.HandleAITurn(currentCharacter));
+            }
+            else
+            {
+                Debug.LogError("AIController instance not found!");
+            }
             EndTurn();
         }
-        // For player-controlled characters, the PlayerController will handle the turn
-        // The player must call EndTurn() when done
     }
+
 
     IEnumerator HandleAITurn(Character aiCharacter)
     {

@@ -74,7 +74,7 @@ public class Pathfinding : MonoBehaviour
             // Path found
             if (current == end)
             {
-                Debug.Log($"Path found with {gScore[current]} steps");
+                //Debug.Log($"Path found with {gScore[current]} steps");
                 var path = ReconstructPath(cameFrom, start, end);
                 return path;
             }
@@ -225,7 +225,7 @@ public class Pathfinding : MonoBehaviour
         path.Reverse();
 
         // Debug path length
-        Debug.Log($"Final path contains {path.Count} tiles from {start.X},{start.Y} to {end.X},{end.Y}");
+        //Debug.Log($"Final path contains {path.Count} tiles from {start.X},{start.Y} to {end.X},{end.Y}");
 
         return path;
     }
@@ -238,7 +238,7 @@ public class Pathfinding : MonoBehaviour
         int rows = grid.GetLength(0);
         int cols = grid.GetLength(1);
 
-        Debug.Log($"Pathfinding on grid with dimensions: {rows}x{cols}");
+        //Debug.Log($"Pathfinding on grid with dimensions: {rows}x{cols}");
     }
 
     /// <summary>

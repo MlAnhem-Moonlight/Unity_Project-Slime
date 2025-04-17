@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     public int currentStamina;
     public int attackPower = 20;
     public int defense = 10;
+    public int AtkRange = 1;
 
     [Header("Position")]
     public HexTile currentTile; // Tile where character is standing
@@ -71,7 +72,7 @@ public class Character : MonoBehaviour
         if (currentTile != null)
         {
             PlaceOnTile(currentTile);
-            Debug.Log($"{characterName} placed on tile ({currentTile.X}, {currentTile.Y}).");
+            //Debug.Log($"{characterName} placed on tile ({currentTile.X}, {currentTile.Y}).");
         }
         else
         {
@@ -114,7 +115,7 @@ public class Character : MonoBehaviour
     public void ReduceStamina(int amount)
     {
         currentStamina = Mathf.Max(0, currentStamina - amount);
-        Debug.Log($"{characterName} stamina reduced to {currentStamina}");
+        //Debug.Log($"{characterName} stamina reduced to {currentStamina}");
     }
 
     // Reset stamina at the start of the character's turn
@@ -127,7 +128,7 @@ public class Character : MonoBehaviour
     private HexTile FindNearestHexTile()
     {
         HexTile[] tiles = FindObjectsOfType<HexTile>();
-        Debug.Log($"Found {tiles.Length} HexTiles.");
+        //Debug.Log($"Found {tiles.Length} HexTiles.");
         HexTile nearestTile = null;
         float minDistance = float.MaxValue;
 
