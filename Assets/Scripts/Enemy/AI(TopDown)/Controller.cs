@@ -9,78 +9,66 @@ public class AIController : MonoBehaviour
     private HexGrid hexGrid;
     private TurnManager turnManager;
 
-    // Q-Learning
+    // Q-Learning parameters
     private Dictionary<(string, string), float> qTable = new Dictionary<(string, string), float>();
     private float learningRate = 0.1f;
     private float discountFactor = 0.9f;
     private float explorationRate = 0.2f;
 
-    // DDA (Dynamic Difficulty Adjustment)
-    private int aiDifficulty = 1; // Difficulty level (1 easy - 5 hard)
+    // DDA parameters
+    private int aiDifficulty = 1;
     private int playerWinCount = 0;
     private int playerLossCount = 0;
+    private float baseExplorationRate = 0.3f;
 
-    // Character stats
-    [Tooltip("Attack range of AI characters")]
-    public int attackRange = 1;
-
-    // Movement
-    [Tooltip("Speed of AI character movement")]
-    public float moveSpeed = 5f;
+    [SerializeField] private List<ActionData> availableActions;
     private Coroutine currentMovementCoroutine;
 
-    public List<ActionData> availableActions;
-
+    [Tooltip("Attack range of AI characters")]
+    public int attackRange = 1;
     void Start()
     {
         turnManager = FindObjectOfType<TurnManager>();
         hexGrid = FindObjectOfType<HexGrid>();
-        // Initialize available actions
+        InitializeActions();
+    }
+
+    private void InitializeActions()
+    {
         availableActions = new List<ActionData>
-        {
-            new ActionData("Attack", damage: 20, stamina: 2, positionAdvantage: 1),
-            new ActionData("Defense", damage: 0, stamina: 1, positionAdvantage: 2),
-            new ActionData("Move", damage: 0, stamina: 1, positionAdvantage: 0)
-        };
+                {
+                    new ActionData("AggressiveAdvance", damage: 20, stamina: 2, positionAdvantage: 2),
+                    new ActionData("DefensiveRetreat", damage: 0, stamina: 1, positionAdvantage: 3),
+                    new ActionData("FlankingMove", damage: 15, stamina: 2, positionAdvantage: 2),
+                    new ActionData("StandGround", damage: 10, stamina: 1, positionAdvantage: 1),
+                    new ActionData("FullAttack", damage: 25, stamina: 3, positionAdvantage: 0)
+                };
     }
 
-    public string ChooseBestAction(string state)
+    public IEnumerator HandleAITurn(Character aiCharacter)
     {
-        // Exploration: Try a random action
-        if (Random.value < explorationRate)
-            return availableActions[Random.Range(0, availableActions.Count)].ActionName;
+        attackRange = aiCharacter.AtkRange;
+        yield return new WaitForSeconds(0.5f);
+        aiCharacter.StartTurn();
 
-        // Use Utility AI to evaluate scores
-        Dictionary<string, float> actionScores = new Dictionary<string, float>();
-        foreach (var action in availableActions)
+        Character nearestEnemy = FindNearestEnemy(aiCharacter);
+        Debug.Log($"Nearest enemy: {nearestEnemy?.characterName}");
+        if (nearestEnemy == null)
         {
-            float qValue = qTable.ContainsKey((state, action.ActionName)) ? qTable[(state, action.ActionName)] : 0;
-            actionScores[action.ActionName] = qValue + EvaluateAction(action);
+            aiCharacter.EndTurn();
+            yield break;
         }
 
-        // Choose action with highest score
-        string bestAction = "";
-        float bestScore = float.MinValue;
-        foreach (var kvp in actionScores)
-        {
-            if (kvp.Value > bestScore)
-            {
-                bestScore = kvp.Value;
-                bestAction = kvp.Key;
-            }
-        }
+        string currentState = GetStateRepresentation(aiCharacter, nearestEnemy);
+        string chosenAction = ChooseBestAction(currentState, aiCharacter);
+        yield return StartCoroutine(ExecuteAction(chosenAction, aiCharacter, nearestEnemy));
 
-        return bestAction;
-    }
+        string newState = GetStateRepresentation(aiCharacter, nearestEnemy);
+        float reward = CalculateReward(aiCharacter, nearestEnemy, chosenAction);
+        UpdateQTable(currentState, chosenAction, reward, newState);
 
-    private float EvaluateAction(ActionData action)
-    {
-        // Adjust weights based on AI difficulty
-        float weightAttack = 1.5f + (aiDifficulty * 0.5f);
-        float weightDefense = 1f;
-        float weightStamina = 0.5f;
-
-        return (action.Damage * weightAttack) - (action.Stamina * weightStamina) + (action.PositionAdvantage * weightDefense);
+        aiCharacter.EndTurn();
+        yield return new WaitForSeconds(0.3f);
     }
 
     public void UpdateQTable(string state, string action, float reward, string nextState)
@@ -96,254 +84,135 @@ public class AIController : MonoBehaviour
         float newQ = currentQ + learningRate * (reward + discountFactor * maxFutureQ - currentQ);
         qTable[(state, action)] = newQ;
     }
-
-    public void AdjustDifficulty()
+    private string ChooseBestAction(string state, Character aiCharacter)
     {
-        if (playerWinCount >= 3)
+        // Exploration vs Exploitation
+        if (Random.value < GetAdjustedExplorationRate())
         {
-            aiDifficulty++;
-            playerWinCount = 0;
+            return GetRandomViableAction(aiCharacter);
         }
-        if (playerLossCount >= 3)
-        {
-            aiDifficulty--;
-            playerLossCount = 0;
-        }
-        aiDifficulty = Mathf.Clamp(aiDifficulty, 1, 5);
 
-        Debug.Log($"AI Difficulty Adjusted: {aiDifficulty}");
-
-        // Adjust exploration rate based on difficulty
-        explorationRate = Mathf.Max(0.1f, 0.3f - (aiDifficulty * 0.05f));
+        return GetOptimalAction(state, aiCharacter);
     }
 
-    public IEnumerator HandleAITurn(Character aiCharacter)
+    private float GetAdjustedExplorationRate()
     {
-        Debug.Log("AI turn: " + aiCharacter.characterName);
-
-        // Cập nhật attackRange từ AtkRange của aiCharacter
-        attackRange = aiCharacter.AtkRange;
-        Debug.Log($"Updated attackRange to {attackRange} for {aiCharacter.characterName}");
-
-        // Initial delay for player to see AI's turn start
-        yield return new WaitForSeconds(0.5f);
-
-        aiCharacter.StartTurn();
-
-        // Find the nearest enemy
-        Character nearestEnemy = FindNearestEnemy(aiCharacter);
-
-        if (nearestEnemy != null)
-        {
-            // Get current state representation
-            string state = GetStateRepresentation(aiCharacter, nearestEnemy);
-
-            // Choose best action based on current state
-            string chosenAction = ChooseBestAction(state);
-            Debug.Log($"AI chose action: {chosenAction}");
-
-            // Execute the chosen action
-            if (chosenAction == "Attack" && IsInAttackRange(aiCharacter, nearestEnemy))
-            {
-                aiCharacter.Attack(nearestEnemy);
-                yield return new WaitForSeconds(0.5f);
-            }
-            else if (chosenAction == "Defense")
-            {
-                Defense(aiCharacter);
-                yield return new WaitForSeconds(0.5f);
-            }
-            else // Default to Move if chosen action is Move or can't perform Attack
-            {
-                HexTile targetTile = FindBestTileTowardsEnemy(aiCharacter, nearestEnemy);
-                if (targetTile != null)
-                {
-                    var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, targetTile, GetMoveRange(aiCharacter));
-                    if (path != null && path.Count > 0)
-                    {
-                        // Use MoveAlongPath for consistency
-                        if (currentMovementCoroutine != null)
-                        {
-                            StopCoroutine(currentMovementCoroutine);
-                        }
-
-                        currentMovementCoroutine = StartCoroutine(MoveCharacterAlongPath(aiCharacter, path));
-
-                        // Wait for movement to complete
-                        yield return currentMovementCoroutine;
-                    }
-                    else
-                    {
-                        Debug.Log("No valid path found for AI movement");
-                    }
-                }
-                else
-                {
-                    Debug.Log("No valid target tile found for AI movement");
-                    // Default to defense if can't move
-                    Defense(aiCharacter);
-                    yield return new WaitForSeconds(0.5f);
-                }
-            }
-
-            // Get new state after action
-            string newState = GetStateRepresentation(aiCharacter, nearestEnemy);
-
-            // Calculate reward (could be improved based on game state)
-            float reward = CalculateReward(aiCharacter, nearestEnemy, chosenAction);
-
-            // Update Q-table
-            UpdateQTable(state, chosenAction, reward, newState);
-        }
-        else
-        {
-            Debug.Log("No enemies found for AI");
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        // End turn
-        aiCharacter.EndTurn();
-
-        // Final delay before ending turn
-        yield return new WaitForSeconds(0.3f);
+        return Mathf.Max(0.1f, baseExplorationRate - (aiDifficulty * 0.05f));
     }
 
-    // Move character along path
-    private IEnumerator MoveCharacterAlongPath(Character character, List<HexTile> path)
+    private string GetRandomViableAction(Character aiCharacter)
     {
-        if (path == null || path.Count <= 1)
-            yield break;
+        var viableActions = availableActions.Where(a => a.Stamina <= aiCharacter.currentStamina).ToList();
+        return viableActions[Random.Range(0, viableActions.Count)].ActionName;
+    }
 
-        // Skip the first tile (current position)
-        for (int i = 1; i < path.Count; i++)
+    private string GetOptimalAction(string state, Character aiCharacter)
+    {
+        Dictionary<string, float> actionScores = new Dictionary<string, float>();
+        foreach (var action in availableActions)
         {
-            HexTile nextTile = path[i];
+            if (action.Stamina <= aiCharacter.currentStamina)
+            {
+                float qValue = qTable.ContainsKey((state, action.ActionName)) ? qTable[(state, action.ActionName)] : 0;
+                float utilityScore = EvaluateAction(action, aiCharacter);
+                actionScores[action.ActionName] = (qValue * 0.7f) + (utilityScore * 0.3f);
+            }
+        }
 
-            // Move to the next tile
-            character.MoveToTile(nextTile);
+        return actionScores.Count > 0 ?
+            actionScores.OrderByDescending(kvp => kvp.Value).First().Key :
+            "StandGround";
+    }
 
-            // Reduce stamina for movement
-            character.ReduceStamina(1);
+    private float EvaluateAction(ActionData action, Character aiCharacter)
+    {
+        float healthWeight = 1.0f + (aiDifficulty * 0.2f);
+        float staminaWeight = 0.5f + (aiDifficulty * 0.1f);
+        float positionWeight = 0.8f + (aiDifficulty * 0.15f);
 
-            // Add delay for visual movement
-            yield return new WaitForSeconds(0.3f);
+        float healthRatio = (float)aiCharacter.currentHealth / aiCharacter.maxHealth;
+        float staminaRatio = (float)aiCharacter.currentStamina / aiCharacter.maxStamina;
 
-            // Break if out of stamina
-            if (character.currentStamina <= 0)
+        return (action.Damage * healthWeight * (1 - healthRatio)) +
+               (action.PositionAdvantage * positionWeight) -
+               (action.Stamina * staminaWeight * (1 - staminaRatio));
+    }
+
+    private IEnumerator ExecuteAction(string actionName, Character aiCharacter, Character enemy)
+    {
+        switch (actionName)
+        {
+            case "AggressiveAdvance":
+                yield return StartCoroutine(ExecuteAggressiveAdvance(aiCharacter, enemy));
+                break;
+            case "DefensiveRetreat":
+                yield return StartCoroutine(ExecuteDefensiveRetreat(aiCharacter, enemy));
+                break;
+            case "FlankingMove":
+                yield return StartCoroutine(ExecuteFlankingMove(aiCharacter, enemy));
+                break;
+            case "StandGround":
+                yield return StartCoroutine(ExecuteStandGround(aiCharacter));
+                break;
+            case "FullAttack":
+                yield return StartCoroutine(ExecuteFullAttack(aiCharacter, enemy));
                 break;
         }
     }
 
-    // Create a state representation of the current game state
-    private string GetStateRepresentation(Character aiCharacter, Character enemy)
+    private IEnumerator ExecuteAggressiveAdvance(Character aiCharacter, Character enemy)
     {
-        int distanceToEnemy = 0;
-        if (aiCharacter.currentTile != null && enemy.currentTile != null)
+        // Move towards enemy aggressively
+        HexTile targetTile = FindBestTileTowardsEnemy(aiCharacter, enemy);
+        if (targetTile != null)
         {
-            var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, enemy.currentTile);
-            distanceToEnemy = path != null ? path.Count - 1 : 99;
-        }
-
-        // Format: "Health-Stamina-EnemyHealth-Distance"
-        return $"{aiCharacter.currentHealth}-{aiCharacter.currentStamina}-{enemy.currentHealth}-{distanceToEnemy}";
-    }
-
-    // Calculate reward for reinforcement learning
-    private float CalculateReward(Character aiCharacter, Character enemy, string action)
-    {
-        float reward = 0;
-
-        if (action == "Attack")
-        {
-            reward += 10; // Base reward for attacking
-
-            // Additional reward if enemy health is low
-            if (enemy.currentHealth < 30)
-                reward += 5;
-
-            // Penalty if AI's stamina is critically low after attack
-            if (aiCharacter.currentStamina <= 1)
-                reward -= 2;
-        }
-        else if (action == "Defense")
-        {
-            reward += 5; // Base reward for defending
-
-            // Additional reward if AI's health is low
-            if (aiCharacter.currentHealth < 30)
-                reward += 5;
-        }
-        else if (action == "Move")
-        {
-            // Reward based on whether AI is now in attack range
-            if (IsInAttackRange(aiCharacter, enemy))
-                reward += 8;
-            else
-            {
-                var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, enemy.currentTile);
-                int distanceToEnemy = path != null ? path.Count - 1 : 99;
-
-                // Small reward for getting closer to enemy
-                reward += 5 - Mathf.Min(5, distanceToEnemy);
-            }
-        }
-
-        return reward;
-    }
-
-    // Find the nearest enemy using the pathfinding system
-    private Character FindNearestEnemy(Character aiCharacter)
-    {
-        if (hexGrid == null)
-        {
-            hexGrid = FindObjectOfType<HexGrid>();
-            if (hexGrid == null)
-            {
-                Debug.LogError("HexGrid reference is missing!");
-                return null;
-            }
-        }
-
-        var enemies = FindObjectsOfType<Character>()
-            .Where(c => c.team != aiCharacter.team && c.gameObject.activeSelf && c.IsAlive())
-            .ToList();
-        if (enemies.Count == 0)
-            return null;
-
-        Character nearestEnemy = null;
-        int shortestPathLength = int.MaxValue;
-
-        foreach (var enemy in enemies)
-        {
-            
-            if (enemy.currentTile == null || aiCharacter.currentTile == null)
-                continue;
-
-            if (aiCharacter.currentTile == null)
-            {
-                Debug.LogError($"{aiCharacter.characterName} does not have a valid currentTile!");
-            }
-            if (enemy.currentTile == null)
-            {
-                Debug.LogError($"{enemy.characterName} does not have a valid currentTile!");
-            }
-            HexTile targetTile = FindNearestTileInAttackRange(enemy.currentTile, attackRange);
-            Debug.Log($"targetTile found {targetTile.X} : {targetTile.Y}");
             var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, targetTile);
-            Debug.Log($"Path found from {aiCharacter.characterName} to {enemy.characterName}: {path} tiles");
-            // If there's a path and it's shorter than the current shortest
-            if (path != null && path.Count < shortestPathLength)
+            if (path != null)
             {
-
-                nearestEnemy = enemy;
-                shortestPathLength = path.Count;
+                yield return StartCoroutine(MoveCharacterAlongPath(aiCharacter, path));
             }
         }
-        //Debug.Log($"Nearest enemy found: {nearestEnemy?.characterName} at distance {shortestPathLength}");
-        return nearestEnemy;
+
+        // Attack if in range
+        if (IsInAttackRange(aiCharacter, enemy) && aiCharacter.currentStamina >= 2)
+        {
+            aiCharacter.Attack(enemy);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
-    // Find the best tile to move towards an enemy
+    private IEnumerator ExecuteDefensiveRetreat(Character aiCharacter, Character enemy)
+    {
+        // Find safe tile away from enemy
+        HexTile safeTile = FindBestTileTowardsEnemy(aiCharacter, enemy);
+        if (safeTile != null)
+        {
+            var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, safeTile);
+            if (path != null)
+            {
+                yield return StartCoroutine(MoveCharacterAlongPath(aiCharacter, path));
+            }
+        }
+    }
+
+    private IEnumerator ExecuteFlankingMove(Character aiCharacter, Character enemy)
+    {
+        // Find flanking position
+        HexTile flankTile = FindFlankingTile(aiCharacter, enemy);
+        if (flankTile != null)
+        {
+            var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, flankTile);
+            if (path != null)
+            {
+                yield return StartCoroutine(MoveCharacterAlongPath(aiCharacter, path));
+                if (IsInAttackRange(aiCharacter, enemy) && aiCharacter.currentStamina >= 1)
+                {
+                    aiCharacter.Attack(enemy);
+                }
+            }
+        }
+    }
+
     private HexTile FindBestTileTowardsEnemy(Character aiCharacter, Character enemy)
     {
         if (enemy == null || enemy.currentTile == null || aiCharacter.currentTile == null)
@@ -427,13 +296,19 @@ public class AIController : MonoBehaviour
         return bestTile;
     }
 
-    // Helper method to get move range based on stamina
+    private bool PathIsWithinStaminaRange(Character character, List<HexTile> path)
+    {
+        int pathLength = path.Count > 0 && path[0] == character.currentTile
+            ? path.Count - 1
+            : path.Count;
+
+        return pathLength <= character.currentStamina;
+    }
+
     private int GetMoveRange(Character character)
     {
         return character.currentStamina;
     }
-
-    // Decide whether to move towards or away from enemy based on current situation
     private bool ShouldMoveTowardsEnemy(Character aiCharacter, Character enemy)
     {
         // Default to moving towards enemy
@@ -460,42 +335,44 @@ public class AIController : MonoBehaviour
         return moveTowardsEnemy;
     }
 
-    // Check if a path is within the character's stamina range
-    private bool PathIsWithinStaminaRange(Character character, List<HexTile> path)
+    private IEnumerator ExecuteStandGround(Character aiCharacter)
     {
-        int pathLength = path.Count > 0 && path[0] == character.currentTile
-            ? path.Count - 1
-            : path.Count;
-
-        return pathLength <= character.currentStamina;
+        // Defensive stance, maybe implement defense bonus later
+        aiCharacter.ReduceStamina(1);
+        yield return new WaitForSeconds(0.5f);
     }
 
-    // Check if target is within attack range
-    private bool IsInAttackRange(Character attacker, Character target)
+    private IEnumerator ExecuteFullAttack(Character aiCharacter, Character enemy)
     {
-        if (attacker == null || target == null || attacker.currentTile == null || target.currentTile == null)
-            return false;
-
-        var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, attacker.currentTile, target.currentTile);
-
-        // Check if distance is within attack range (path.Count - 1 because we don't count current tile)
-        return path != null && path.Count - 1 <= attackRange;
+        if (IsInAttackRange(aiCharacter, enemy) && aiCharacter.currentStamina >= 3)
+        {
+            // Powerful attack implementation
+            aiCharacter.Attack(enemy);
+            aiCharacter.Attack(enemy);
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            // Move to attack range if possible
+            HexTile attackTile = FindNearestTileInAttackRange(enemy.currentTile, aiCharacter.AtkRange);
+            if (attackTile != null)
+            {
+                var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, attackTile);
+                if (path != null)
+                {
+                    yield return StartCoroutine(MoveCharacterAlongPath(aiCharacter, path));
+                }
+            }
+        }
     }
 
-    // Perform defense action
-    private void Defense(Character character)
-    {
-        Debug.Log($"{character.characterName} takes defensive stance");
-
-        // We need to implement defense mechanics
-        // For now, we'll simply reduce stamina
-        character.ReduceStamina(1);
-    }
-    //phần tìm ô gần nhất trong tầm đánh cần tích hợp A* từ pathFinding để tìm ô tối ưu nhất gần ô enemyTile nhất
-    private HexTile FindNearestTileInAttackRange(HexTile enemyTile, int attackRange) 
+    private HexTile FindNearestTileInAttackRange(HexTile enemyTile, int attackRange)
     {
         if (enemyTile == null)
+        {
+            Debug.LogError("Enemy tile is null!");
             return null;
+        }
 
         HexTile nearestTile = null;
         int shortestDistance = int.MaxValue;
@@ -519,46 +396,299 @@ public class AIController : MonoBehaviour
         return nearestTile;
     }
 
-    // Hàm tính khoảng cách giữa hai ô trên lưới hex
+    private IEnumerator MoveCharacterAlongPath(Character character, List<HexTile> path)
+    {
+        if (path == null || path.Count <= 1)
+            yield break;
+
+        // Skip the first tile (current position)
+        for (int i = 1; i < path.Count; i++)
+        {
+            HexTile nextTile = path[i];
+
+            // Move to the next tile
+            character.MoveToTile(nextTile);
+
+            // Reduce stamina for movement
+            character.ReduceStamina(1);
+
+            // Add delay for visual movement
+            yield return new WaitForSeconds(0.3f);
+
+            // Break if out of stamina
+            if (character.currentStamina <= 0)
+                break;
+        }
+    }
+    private Character FindNearestEnemy(Character aiCharacter)
+    {
+        var enemies = turnManager.allCharacters
+            .Where(c => c.team != aiCharacter.team && c.IsAlive())
+            .ToList();
+        Debug.Log($"Enemies found: {enemies.Count}");
+        if (enemies.Count == 0)
+            return null;
+
+        Character nearestEnemy = null;
+        int shortestPathLength = int.MaxValue;
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy.currentTile == null || aiCharacter.currentTile == null)
+                continue;
+
+            var path = Pathfinding.FindingPathOccupied(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, enemy.currentTile);
+            Debug.Log($"Path found to {enemy.characterName}: {path?.Count} tiles");
+            if (path != null && path.Count < shortestPathLength)
+            {
+                nearestEnemy = enemy;
+                shortestPathLength = path.Count;
+            }
+            else Debug.Log($"No path found to {enemy.characterName}");
+        }
+
+        return nearestEnemy;
+    }
+    private string GetStateRepresentation(Character aiCharacter, Character enemy)
+    {
+        int distanceToEnemy = CalculateHexDistance(aiCharacter.currentTile, enemy.currentTile);
+        string healthState = GetHealthState(aiCharacter.currentHealth);
+        string staminaState = GetStaminaState(aiCharacter.currentStamina);
+        string enemyHealthState = GetHealthState(enemy.currentHealth);
+        string positionState = GetPositionState(aiCharacter, enemy);
+
+        return $"{healthState}-{staminaState}-{enemyHealthState}-{distanceToEnemy}-{positionState}";
+    }
+
+    private float CalculateReward(Character aiCharacter, Character enemy, string action)
+    {
+        float reward = 0;
+        int newDistance = CalculateHexDistance(aiCharacter.currentTile, enemy.currentTile);
+        bool inAttackRange = IsInAttackRange(aiCharacter, enemy);
+
+        // Base rewards based on action type and situation
+        switch (action)
+        {
+            case "AggressiveAdvance":
+                reward += inAttackRange ? 15 : 5;
+                reward += aiCharacter.currentHealth > enemy.currentHealth ? 5 : -5;
+                break;
+
+            case "DefensiveRetreat":
+                reward += aiCharacter.currentHealth < enemy.currentHealth ? 10 : 0;
+                reward += aiCharacter.currentStamina < 2 ? 5 : -5;
+                break;
+
+            case "FlankingMove":
+                reward += inAttackRange ? 10 : 0;
+                reward += IsInAdvantageousPosition(aiCharacter, enemy) ? 8 : -3;
+                break;
+
+            case "StandGround":
+                reward += aiCharacter.currentStamina < 2 ? 5 : -5;
+                reward += inAttackRange && aiCharacter.currentHealth > enemy.currentHealth ? 5 : 0;
+                break;
+
+            case "FullAttack":
+                reward += inAttackRange ? 20 : -10;
+                reward += aiCharacter.currentStamina >= 3 ? 5 : -10;
+                break;
+        }
+
+        // Additional situational rewards
+        reward += aiCharacter.currentHealth > enemy.currentHealth ? 5 : -5;
+        reward += inAttackRange && aiCharacter.currentStamina >= 2 ? 10 : 0;
+
+        return reward;
+    }
+
     private int CalculateHexDistance(HexTile a, HexTile b)
     {
         return (Mathf.Abs(a.X - b.X)
               + Mathf.Abs(a.Y - b.Y)
               + Mathf.Abs((-a.X - a.Y) - (-b.X - b.Y))) / 2;
     }
-}
-/*
-// Action data class used by the AI
-[System.Serializable]
-public class ActionData
-{
-    public string ActionName;
-    public int Damage;
-    public int Stamina;
-    public int PositionAdvantage;
-
-    public ActionData(string actionName, int damage, int stamina, int positionAdvantage)
+    private bool IsInAdvantageousPosition(Character aiCharacter, Character enemy)
     {
-        ActionName = actionName;
-        Damage = damage;
-        Stamina = stamina;
-        PositionAdvantage = positionAdvantage;
-    }
-}
-//chuyển list<Tiles> thành 2D array
-HexTile[,] adjacentGrid = ConvertToGrid(attacker.currentTile.AdjacentTiles);
-var path = Pathfinding.FindPath(adjacentGrid, attacker.currentTile, target.currentTile);
-private HexTile[,] ConvertToGrid(List<HexTile> tiles)
-{
-    int size = tiles.Count;
-    HexTile[,] grid = new HexTile[size, size];
+        if (enemy.currentTile == null || aiCharacter.currentTile == null)
+            return false;
 
-    for (int i = 0; i < size; i++)
-    {
-        grid[i, 0] = tiles[i];
+        // Check if we're flanking the enemy
+        var enemyAdjacentTiles = enemy.currentTile.AdjacentTiles;
+        int occupiedAdjacentTiles = enemyAdjacentTiles.Count(t => t.IsOccupied);
+
+        return occupiedAdjacentTiles <= 2 && IsInAttackRange(aiCharacter, enemy);
     }
 
-    return grid;
-}
+    public void AdjustDifficulty(bool playerWon)
+    {
+        if (playerWon)
+            playerWinCount++;
+        else
+            playerLossCount++;
 
-*/
+        if (playerWinCount >= 3)
+        {
+            aiDifficulty = Mathf.Min(5, aiDifficulty + 1);
+            playerWinCount = 0;
+            explorationRate *= 0.9f;
+        }
+        else if (playerLossCount >= 3)
+        {
+            aiDifficulty = Mathf.Max(1, aiDifficulty - 1);
+            playerLossCount = 0;
+            explorationRate *= 1.1f;
+        }
+
+        explorationRate = Mathf.Clamp(explorationRate, 0.1f, 0.4f);
+        Debug.Log($"AI Difficulty adjusted to: {aiDifficulty}, Exploration Rate: {explorationRate:F2}");
+    }
+
+    // Helper methods
+    private string GetHealthState(int health) =>
+        health > 70 ? "High" : health > 30 ? "Medium" : "Low";
+
+    private string GetStaminaState(int stamina) =>
+        stamina >= 4 ? "High" : stamina >= 2 ? "Medium" : "Low";
+
+    private string GetPositionState(Character aiCharacter, Character enemy)
+    {
+        if (IsInAttackRange(aiCharacter, enemy))
+            return "AttackRange";
+        if (IsInAdvantageousPosition(aiCharacter, enemy))
+            return "Advantageous";
+        return "Normal";
+    }
+
+
+    private bool IsInAttackRange(Character attacker, Character target)
+    {
+        if (attacker == null || target == null || attacker.currentTile == null || target.currentTile == null)
+            return false;
+
+        var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, attacker.currentTile, target.currentTile);
+
+        return path != null && path.Count - 1 <= attackRange;
+    }
+    private HexTile FindFlankingTile(Character aiCharacter, Character enemy)
+    {
+        if (enemy == null || enemy.currentTile == null || aiCharacter.currentTile == null)
+            return null;
+
+        // Get all tiles within movement range
+        var reachableTiles = new List<HexTile>();
+        int moveRange = GetMoveRange(aiCharacter);
+
+        // Get enemy adjacent tiles for flanking analysis
+        var enemyAdjacentTiles = enemy.currentTile.AdjacentTiles;
+        var occupiedAdjacentTiles = enemyAdjacentTiles.Where(t => t.IsOccupied).ToList();
+
+        // Get potential flanking positions
+        var flankingPositions = new List<(HexTile tile, float score)>();
+
+        foreach (var tile in hexGrid.Tiles)
+        {
+            if (tile != null && !tile.IsOccupied && tile != aiCharacter.currentTile)
+            {
+                // Check if tile is reachable within stamina
+                var pathToTile = Pathfinding.FindPath(
+                    hexGrid.AdjacentTilesGrid,
+                    aiCharacter.currentTile,
+                    tile,
+                    moveRange);
+
+                if (pathToTile != null && pathToTile.Count <= moveRange + 1 &&
+                    PathIsWithinStaminaRange(aiCharacter, pathToTile))
+                {
+                    // Calculate flanking score for this tile
+                    float flankingScore = CalculateFlankingScore(tile, enemy, aiCharacter, occupiedAdjacentTiles);
+
+                    if (flankingScore > 0)
+                    {
+                        flankingPositions.Add((tile, flankingScore));
+                    }
+                }
+            }
+        }
+
+        // Return the tile with highest flanking score
+        if (flankingPositions.Count > 0)
+        {
+            var bestPosition = flankingPositions.OrderByDescending(p => p.score).First();
+            return bestPosition.tile;
+        }
+
+        // If no good flanking position found, return null
+        return null;
+    }
+
+    private float CalculateFlankingScore(HexTile tile, Character enemy, Character aiCharacter, List<HexTile> occupiedEnemyAdjacent)
+    {
+        float score = 0;
+
+        // Base score calculations
+        int distanceToEnemy = CalculateHexDistance(tile, enemy.currentTile);
+
+        // Must be within attack range
+        if (distanceToEnemy > attackRange)
+            return 0;
+
+        // Calculate angle between AI and occupied tiles relative to enemy
+        foreach (var occupiedTile in occupiedEnemyAdjacent)
+        {
+            float angle = CalculateAngleBetweenTiles(enemy.currentTile, occupiedTile, tile);
+
+            // Higher score for positions opposite to occupied tiles (ideal flanking angle ~180 degrees)
+            if (angle > 120f)
+                score += 5f;
+            else if (angle > 90f)
+                score += 3f;
+        }
+
+        // Bonus for positions that minimize enemy escape routes
+        var enemyEscapeRoutes = enemy.currentTile.AdjacentTiles.Count(t => !t.IsOccupied);
+        score += (6 - enemyEscapeRoutes) * 2;
+
+        // Factor in AI difficulty
+        score *= (1f + (aiDifficulty * 0.1f));
+
+        // Penalty for tiles too close to other enemies
+        foreach (var otherChar in turnManager.allCharacters)
+        {
+            if (otherChar != enemy && otherChar != aiCharacter && otherChar.team != aiCharacter.team)
+            {
+                int distanceToOther = CalculateHexDistance(tile, otherChar.currentTile);
+                if (distanceToOther <= 2)
+                    score -= (2 - distanceToOther) * 3;
+            }
+        }
+
+        // Consider stamina cost
+        var pathToTile = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, tile);
+        if (pathToTile != null)
+        {
+            int staminaCost = pathToTile.Count - 1;
+            score -= staminaCost * 0.5f;
+        }
+
+        return Mathf.Max(0, score);
+    }
+
+    private float CalculateAngleBetweenTiles(HexTile center, HexTile tile1, HexTile tile2)
+    {
+        // Convert hex coordinates to world position vectors
+        Vector2 centerPos = new Vector2(center.X, center.Y);
+        Vector2 pos1 = new Vector2(tile1.X, tile1.Y);
+        Vector2 pos2 = new Vector2(tile2.X, tile2.Y);
+
+        // Calculate vectors from center to each tile
+        Vector2 vector1 = pos1 - centerPos;
+        Vector2 vector2 = pos2 - centerPos;
+
+        // Calculate angle between vectors
+        float angle = Vector2.Angle(vector1, vector2);
+
+        return angle;
+    }
+
+}

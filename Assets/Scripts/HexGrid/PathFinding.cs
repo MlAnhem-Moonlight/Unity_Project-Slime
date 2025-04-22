@@ -137,6 +137,114 @@ public class Pathfinding : MonoBehaviour
         return null;
     }
 
+    public static List<HexTile> FindingPathOccupied(HexTile[,] grid, HexTile start, HexTile end, int maxSearchDepth = int.MaxValue)
+    {
+        Debug.Log("Finding path with occupied tiles start: ["+ start.X+","+start.Y + "]   [" + end.X+","+end.Y+"]");
+        if (grid == null || start == null || end == null)
+            return null;
+
+        // Debug the matrix
+        DebugMatrix(grid);
+
+        // If start and end are the same, return just the start tile
+        if (start == end)
+            return new List<HexTile> { start };
+
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+
+        // Priority queue for open set with efficient ordering
+        var openSet = new SortedSet<PathNode>(new PathNodeComparer());
+        var openSetTracker = new HashSet<HexTile>(); // For O(1) Contains() operations
+        var closedSet = new HashSet<HexTile>(); // Track already evaluated nodes
+
+        // Maps for tracking
+        var cameFrom = new Dictionary<HexTile, HexTile>();
+        var gScore = new Dictionary<HexTile, int>();
+        var fScore = new Dictionary<HexTile, int>();
+
+        // Initialize scores
+        gScore[start] = 0;
+        int initialFScore = CalculateHeuristic(start, end);
+        fScore[start] = initialFScore;
+        openSet.Add(new PathNode(start, initialFScore, 0));
+        openSetTracker.Add(start);
+
+        int iterations = 0;
+
+        while (openSet.Count > 0 && iterations < maxSearchDepth)
+        {
+            iterations++;
+
+            // Get the node with lowest F score
+            var currentNode = openSet.Min;
+            HexTile current = currentNode.Tile;
+
+            // Path found
+            if (current == end)
+            {
+                var path = ReconstructPath(cameFrom, start, end);
+                return path;
+            }
+
+            // Manage the open sets
+            openSet.Remove(currentNode);
+            openSetTracker.Remove(current);
+            closedSet.Add(current);
+
+            // Explore all possible neighbors
+            foreach (var neighbor in GetValidNeighbors(current, grid, closedSet))
+            {
+                // Skip already processed tiles
+                if (closedSet.Contains(neighbor))
+                    continue;
+
+                // Calculate new path score - always increment by 1 to ensure fewest cells
+                int tentativeGScore = gScore[current] + MOVEMENT_COST;
+
+                // If this path is better than any previously found or node not yet discovered
+                if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
+                {
+                    // Update the best path
+                    cameFrom[neighbor] = current;
+                    gScore[neighbor] = tentativeGScore;
+
+                    // Calculate F score with weighted heuristic to prioritize direct paths
+                    int newFScore = tentativeGScore + CalculateHeuristic(neighbor, end) * 2;
+                    fScore[neighbor] = newFScore;
+
+                    if (!openSetTracker.Contains(neighbor))
+                    {
+                        var newNode = new PathNode(neighbor, newFScore, tentativeGScore);
+                        openSet.Add(newNode);
+                        openSetTracker.Add(neighbor);
+                    }
+                    else
+                    {
+                        // Update existing node with new scores
+                        var existingNodes = new List<PathNode>();
+                        foreach (var node in openSet)
+                        {
+                            if (node.Tile == neighbor)
+                                existingNodes.Add(node);
+                        }
+
+                        foreach (var oldNode in existingNodes)
+                        {
+                            openSet.Remove(oldNode);
+                        }
+
+                        openSet.Add(new PathNode(neighbor, newFScore, tentativeGScore));
+                    }
+                }
+            }
+        }
+
+        // No path found or depth limit reached
+        Debug.LogWarning($"No path found after {iterations} iterations");
+        return null;
+    }
+
     /// <summary>
     /// Gets valid neighbors for a hex tile, filtering out invalid positions
     /// </summary>
