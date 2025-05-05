@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Wall, Water, UI, Ceilling, Ground, Human, Demon, Unknow, Furniture, HexGrid
 - Active game object:
-  - Name: EvtManager
-  - Tag: Untagged
-  - Layer: Default
+  - Name: Soldier1
+  - Tag: Ally
+  - Layer: Human
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

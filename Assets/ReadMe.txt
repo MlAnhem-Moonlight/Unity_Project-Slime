@@ -24,4 +24,5 @@ Sửa trong TopDown Character Layout cần set tăng giảm layout index ứng v
 
 Thêm AI cho quái ở TopDown state
 
-sửa lại AI cho phần TopDown
+sửa lại AI cho phần TopDown 
+	- Bug phần AI tìm đường đi

@@ -1457,13 +1457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34640e9cca241dc4ea7a7fe556ffa4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableActions: []
   attackRange: 1
-  moveSpeed: 5
-  availableActions:
-  - ActionName: Attack
-    Damage: 1
-    Stamina: 1
-    PositionAdvantage: 0
 --- !u!1 &1211922316
 GameObject:
   m_ObjectHideFlags: 0
