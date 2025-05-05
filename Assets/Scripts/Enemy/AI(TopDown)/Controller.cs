@@ -159,6 +159,7 @@ public class AIController : MonoBehaviour
                 if (targetTile != null)
                 {
                     var path = Pathfinding.FindPath(hexGrid.AdjacentTilesGrid, aiCharacter.currentTile, targetTile, GetMoveRange(aiCharacter));
+                    Debug.Log($"Path found from {aiCharacter.characterName} to {targetTile.X}, {targetTile.Y}: {path.Count} tiles");
                     if (path != null && path.Count > 0)
                     {
                         // Use MoveAlongPath for consistency

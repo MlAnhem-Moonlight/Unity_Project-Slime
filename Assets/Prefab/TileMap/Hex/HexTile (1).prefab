@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: e7a0accea483fb64a9472f0c7cc8d3c5, type: 3}
   m_Color: {r: 1, g: 0.54082924, b: 0, a: 0.25490198}
   m_FlipX: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   Y: 0
   WorldPosition: {x: 0, y: 0, z: 0}
   IsOccupied: 0
+  AdjacentTiles: []
 --- !u!60 &108663470146858541
 PolygonCollider2D:
   m_ObjectHideFlags: 0

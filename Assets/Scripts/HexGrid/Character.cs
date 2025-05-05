@@ -128,7 +128,7 @@ public class Character : MonoBehaviour
     private HexTile FindNearestHexTile()
     {
         HexTile[] tiles = FindObjectsOfType<HexTile>();
-        //Debug.Log($"Found {tiles.Length} HexTiles.");
+        Debug.Log($"Found {tiles.Length} HexTiles.");
         HexTile nearestTile = null;
         float minDistance = float.MaxValue;
 
