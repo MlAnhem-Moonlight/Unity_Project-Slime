@@ -24,6 +24,7 @@ public class TriggerHanging : MonoBehaviour
             try
             {
                 collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                collision.gameObject.GetComponent<Rigidbody2D>().excludeLayers = 0;
                 collision.gameObject.tag = "Untagged";
             }
             catch(Exception e)

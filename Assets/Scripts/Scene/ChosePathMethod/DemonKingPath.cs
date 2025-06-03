@@ -40,6 +40,10 @@ public class DemonKingPath : MonoBehaviour
         {
             isPlayerNearby = false;
         }
-        if(!other.CompareTag("Player") && !other.CompareTag("Projective")) GetComponent<Rigidbody2D>().gravityScale = 1;
+        if (!other.CompareTag("Player") && !other.CompareTag("Projective"))
+        {
+            GetComponent<Rigidbody2D>().gravityScale = 1;
+            GetComponent<Rigidbody2D>().excludeLayers = 0;
+        }
     }
 }
